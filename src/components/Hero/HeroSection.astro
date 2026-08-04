@@ -3,21 +3,9 @@
 ---
 
 <section class="hero" id="hero">
-  <div class="hero-container">
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1 class="hero-title">Creative Work</h1>
-        <p class="hero-subtitle">Photography • Illustration • Art Direction • Visual Storytelling</p>
-      </div>
-    </div>
+  <div class="placeholder">
+    <h1 class="hero-title">Welcome to My Portfolio</h1>
     
-    <div class="hero-visual">
-      <div class="hero-shape hero-shape-pink"></div>
-      <div class="hero-book">
-        <div class="book-page"></div>
-        <div class="book-spine"></div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -28,129 +16,10 @@
     padding: var(--spacing-2xl) 0;
     position: relative;
   }
-
-  .hero-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--spacing-md);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
-    align-items: center;
+  .placeholder{
+    background-color: rgb(193, 193, 192);
+    height: 420px;
   }
 
-  .hero-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
 
-  .hero-text {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-  }
-
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: var(--text-5xl);
-    font-weight: var(--weight-bold);
-    color: var(--black);
-    line-height: var(--leading-tight);
-  }
-
-  .hero-subtitle {
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    color: var(--gray-dark);
-    line-height: var(--leading-relaxed);
-  }
-
-  .hero-visual {
-    position: relative;
-    height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-shape-pink {
-    position: absolute;
-    width: 200px;
-    height: 250px;
-    background-color: var(--coral-pink);
-    border-radius: var(--radius-lg);
-    border: var(--border-medium) solid var(--gray-medium);
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 1;
-  }
-
-  .hero-book {
-    position: absolute;
-    width: 350px;
-    height: 280px;
-    background-color: var(--paper);
-    border-radius: var(--radius-lg);
-    border: var(--border-thick) solid var(--black);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    right: 0;
-    z-index: 2;
-    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.1);
-  }
-
-  .book-page {
-    width: 90%;
-    height: 90%;
-    background-color: var(--paper-dark);
-    border-radius: var(--radius-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--gray-dark);
-    font-family: var(--font-body);
-    font-size: var(--text-base);
-  }
-
-  .book-spine {
-    position: absolute;
-    width: 20px;
-    height: 100%;
-    background-color: var(--black);
-    left: 0;
-    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
-  }
-
-  /* Mobile Responsive */
-  @media (max-width: 768px) {
-    .hero-container {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-lg);
-    }
-
-    .hero-visual {
-      height: 300px;
-    }
-
-    .hero-shape-pink {
-      width: 120px;
-      height: 180px;
-    }
-
-    .hero-book {
-      width: 280px;
-      height: 220px;
-    }
-
-    .hero-title {
-      font-size: var(--text-3xl);
-    }
-
-    .hero-subtitle {
-      font-size: var(--text-base);
-    }
-  }
 </style>
