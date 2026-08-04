@@ -17,10 +17,8 @@
         <span class="ribbon-text">Branding</span>
         <span class="ribbon-separator">•</span>
         <span class="ribbon-text">Ui/Ux</span>
-        
       </div>
-    </div> 
-    <!--Duplicate --> 
+    </div>
     <div class="ribbon-container">
       <div class="ribbon-content">
         <span class="ribbon-text">Photography</span>
@@ -35,8 +33,68 @@
         <span class="ribbon-separator">•</span>
         <span class="ribbon-text">Ui/Ux</span>
       </div>
-   </div>
-  </div> 
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Art Direction</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Branding</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Ui/Ux</span>
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Art Direction</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Branding</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Ui/Ux</span>
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Art Direction</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Branding</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Ui/Ux</span>
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Art Direction</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Branding</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Ui/Ux</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <style>
@@ -45,29 +103,30 @@
     background-color: var(--blue-primary);
     padding: var(--spacing-lg) 0;
     margin: var(--spacing-xl) 0;
-
     overflow: hidden;
     transform: skewY(-2deg);
-    
-    
+  }
+
+  .ribbon-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    will-change: transform;
+    animation: marquee 18s linear infinite;
   }
 
   .ribbon-container {
-    max-width: 100%;
+    flex: 0 0 auto;
     padding: 0 var(--spacing-md);
-    
   }
 
   .ribbon-content {
     display: flex;
     align-items: center;
-    flex-shrink: 0;
     gap: var(--spacing-md);
-    width:auto;
-   
-    
-    
-   
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .ribbon-text {
@@ -75,19 +134,30 @@
     font-size: var(--text-4xl);
     font-weight: var(--weight-bold);
     color: var(--white);
-    flex-wrap: nowrap;
-  
-
-    
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .ribbon-separator {
     font-size: var(--text-2xl);
     color: var(--white);
     opacity: 0.6;
+    flex-shrink: 0;
   }
 
-  /* Mobile Responsive */
+  .blue-ribbon:hover .ribbon-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
   @media (max-width: 768px) {
     .ribbon-text {
       font-size: var(--text-lg);
@@ -102,5 +172,15 @@
       margin: var(--spacing-lg) 0;
     }
   }
-  .ribon-track{}
+
+  @media (prefers-reduced-motion: reduce) {
+    .ribbon-track {
+      animation: none !important;
+      transform: none !important;
+    }
+
+    .blue-ribbon:hover .ribbon-track {
+      animation: none !important;
+    }
+  }
 </style>
