@@ -1,0 +1,9 @@
+/* Animation Variables */
+:root {
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+/* Animations - Reserved for Phase 2 */
+/* No animations in Phase 1 */

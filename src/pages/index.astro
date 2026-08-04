@@ -1,11 +1,39 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import MainLayout from '../layouts/MainLayout.astro';
+import Navbar from '../components/Navbar/Navbar.astro';
+import HeroSection from '../components/Hero/HeroSection.astro';
+import BlueRibbon from '../components/Marquee/BlueRibbon.astro';
+import Sketchbook from '../components/Sketchbook/Sketchbook.astro';
+import AboutSection from '../components/About/AboutSection.astro';
+import SkillsSection from '../components/Skills/SkillsSection.astro';
+import RedRibbon from '../components/Marquee/RedRibbon.astro';
+import InspirationSection from '../components/Inspiration/InspirationSection.astro';
+import ProjectGrid from '../components/Projects/ProjectGrid.astro';
+import Footer from '../components/Footer/Footer.astro';
+import '../styles/global.css';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const title = 'Portfolio - Communication Design Student';
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<MainLayout title={title}>
+  <Navbar />
+  <HeroSection />
+  <BlueRibbon />
+  <Sketchbook />
+  <AboutSection />
+  <SkillsSection />
+  <RedRibbon />
+  <InspirationSection />
+  <ProjectGrid />
+  <Footer />
+</MainLayout>  
+<style>
+  .nav{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: var(--background-yellow);
+  font-family: var(--font-titles);
+  font-size: 50px;
+  }
+</style>

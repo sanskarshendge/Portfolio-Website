@@ -1,0 +1,71 @@
+---
+// BlueRibbon.astro
+---
+
+<section class="blue-ribbon">
+  <div class="ribbon-container">
+    <div class="ribbon-content">
+      <span class="ribbon-text">Photography</span>
+      <span class="ribbon-separator">•</span>
+      <span class="ribbon-text">Illustration</span>
+      <span class="ribbon-separator">•</span>
+      <span class="ribbon-text">Art Direction</span>
+      <span class="ribbon-separator">•</span>
+      <span class="ribbon-text">Visual Storytelling</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .blue-ribbon {
+    width: 100%;
+    background-color: var(--blue-primary);
+    padding: var(--spacing-lg) 0;
+    margin: var(--spacing-xl) 0;
+    overflow: hidden;
+    transform: skewY(-2deg);
+  }
+
+  .ribbon-container {
+    max-width: 100%;
+    padding: 0 var(--spacing-md);
+  }
+
+  .ribbon-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+    transform: skewY(2deg);
+  }
+
+  .ribbon-text {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--white);
+  }
+
+  .ribbon-separator {
+    font-size: var(--text-2xl);
+    color: var(--white);
+    opacity: 0.6;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .ribbon-text {
+      font-size: var(--text-lg);
+    }
+
+    .ribbon-separator {
+      font-size: var(--text-lg);
+    }
+
+    .blue-ribbon {
+      padding: var(--spacing-md) 0;
+      margin: var(--spacing-lg) 0;
+    }
+  }
+</style>

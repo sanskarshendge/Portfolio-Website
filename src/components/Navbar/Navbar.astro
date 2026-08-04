@@ -1,0 +1,87 @@
+---
+// Navbar.astro
+const navItems = [
+  { label: 'About', href: '#about' },
+  { label: 'Work', href: '#work' },
+  { label: 'Inspiration', href: '#inspiration' },
+  { label: 'Contact', href: '#contact' }
+];
+---
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-logo">
+      <a href="/">Portfolio</a>
+    </div>
+    <ul class="navbar-menu">
+      {navItems.map((item) => (
+        <li class="navbar-item">
+          <a href={item.href} class="navbar-link">{item.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    width: 100%;
+    background-color: var(--yellow-base);
+    border-bottom: var(--border-medium) solid var(--black);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .navbar-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar-logo a {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--black);
+  }
+
+  .navbar-menu {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+  }
+
+  .navbar-item {
+    list-style: none;
+  }
+
+  .navbar-link {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--black);
+    transition: opacity var(--transition-fast);
+  }
+
+  .navbar-link:hover {
+    opacity: 0.6;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .navbar-container {
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .navbar-menu {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--spacing-md);
+    }
+  }
+</style>

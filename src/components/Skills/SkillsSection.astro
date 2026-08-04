@@ -1,0 +1,90 @@
+---
+// SkillsSection.astro
+import skills from '../../data/skills.json';
+---
+
+<section class="skills" id="skills">
+  <div class="skills-container">
+    <h2 class="skills-title">Skills & Expertise</h2>
+    
+    <div class="skills-grid">
+      {skills.map((skill) => (
+        <div class="skill-card">
+          <h3 class="skill-name">{skill.name}</h3>
+          <p class="skill-description">{skill.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .skills {
+    width: 100%;
+    background-color: var(--yellow-base);
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .skills-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .skills-title {
+    font-family: var(--font-display);
+    font-size: var(--text-5xl);
+    font-weight: var(--weight-bold);
+    color: var(--black);
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+  }
+
+  .skill-card {
+    background-color: var(--paper);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: var(--border-medium) solid var(--black);
+    transition: transform var(--transition-normal);
+  }
+
+  .skill-card:hover {
+    transform: translateY(-4px);
+  }
+
+  .skill-name {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--black);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .skill-description {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    color: var(--gray-dark);
+    line-height: var(--leading-relaxed);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .skills-title {
+      font-size: var(--text-3xl);
+    }
+
+    .skills-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .skill-card {
+      padding: var(--spacing-md);
+    }
+  }
+</style>

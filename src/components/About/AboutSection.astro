@@ -1,0 +1,107 @@
+---
+// AboutSection.astro
+import about from '../../data/about.json';
+---
+
+<section class="about" id="about">
+  <div class="about-container">
+    <div class="about-content">
+      <h2 class="about-title">{about.title}</h2>
+      <p class="about-intro">{about.intro}</p>
+      <p class="about-bio">{about.bio}</p>
+    </div>
+
+    <div class="about-contact">
+      <h3>Get in Touch</h3>
+      <p class="contact-email">{about.email}</p>
+      <p class="contact-location">{about.location}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about {
+    width: 100%;
+    background-color: var(--yellow-base);
+    padding: var(--spacing-2xl) 0;
+  }
+
+  .about-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+  }
+
+  .about-title {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+    color: var(--black);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .about-intro {
+    font-family: var(--font-body);
+    font-size: var(--text-lg);
+    color: var(--black);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .about-bio {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--gray-dark);
+    line-height: var(--leading-relaxed);
+  }
+
+  .about-contact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background-color: var(--paper);
+    border-radius: var(--radius-lg);
+    border: var(--border-medium) solid var(--black);
+  }
+
+  .about-contact h3 {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--black);
+  }
+
+  .contact-email,
+  .contact-location {
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--gray-dark);
+    margin: 0;
+  }
+
+  .contact-email a,
+  .contact-location a {
+    color: var(--blue-primary);
+    text-decoration: underline;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .about-container {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
+
+    .about-title {
+      font-size: var(--text-3xl);
+    }
+
+    .about-intro {
+      font-size: var(--text-base);
+    }
+  }
+</style>

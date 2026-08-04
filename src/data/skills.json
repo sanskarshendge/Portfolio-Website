@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Illustration",
+    "description": "Character design, narrative art, visual storytelling"
+  },
+  {
+    "name": "Branding",
+    "description": "Logo design, identity systems, brand guidelines"
+  },
+  {
+    "name": "Art Direction",
+    "description": "Visual campaigns, creative direction, concept development"
+  },
+  {
+    "name": "Photography",
+    "description": "Documentary, editorial, product photography"
+  },
+  {
+    "name": "UI/UX",
+    "description": "Interface design, user experience, digital products"
+  },
+  {
+    "name": "Visual Storytelling",
+    "description": "Narrative design, communication through visuals"
+  }
+]
