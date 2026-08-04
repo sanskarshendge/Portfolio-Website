@@ -4,22 +4,30 @@
 
 <section class="hero" id="hero">
   <div class="placeholder">
-    <h1 class="hero-title">Welcome to My Portfolio</h1>
+    <h1 class="hero-title"></h1>
     
+  </div>
+  <div class="sketchbook">
+    <img src="src/assets/sketchbook.png" alt="Sketchbook">
   </div>
 </section>
 
 <style>
   .hero {
+    diaplay: flex;
+    flex-direction:row;
     width: 100%;
     background-color: var(--yellow-base);
-    padding: var(--spacing-2xl) 0;
     position: relative;
   }
   .placeholder{
     background-color: rgb(193, 193, 192);
     height: 420px;
+    padding: var(--spacing-md);
   }
-
+  .sketchbook {
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+  }
 
 </style>

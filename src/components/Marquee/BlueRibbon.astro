@@ -3,17 +3,40 @@
 ---
 
 <section class="blue-ribbon">
-  <div class="ribbon-container">
-    <div class="ribbon-content">
-      <span class="ribbon-text">Photography</span>
-      <span class="ribbon-separator">•</span>
-      <span class="ribbon-text">Illustration</span>
-      <span class="ribbon-separator">•</span>
-      <span class="ribbon-text">Art Direction</span>
-      <span class="ribbon-separator">•</span>
-      <span class="ribbon-text">Visual Storytelling</span>
-    </div>
-  </div>
+  <div class="ribbon-track">
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Art Direction</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Branding</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Ui/Ux</span>
+        
+      </div>
+    </div> 
+    <!--Duplicate --> 
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Art Direction</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Branding</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Ui/Ux</span>
+      </div>
+   </div>
+  </div> 
 </section>
 
 <style>
@@ -22,29 +45,40 @@
     background-color: var(--blue-primary);
     padding: var(--spacing-lg) 0;
     margin: var(--spacing-xl) 0;
+
     overflow: hidden;
     transform: skewY(-2deg);
+    
+    
   }
 
   .ribbon-container {
     max-width: 100%;
     padding: 0 var(--spacing-md);
+    
   }
 
   .ribbon-content {
     display: flex;
     align-items: center;
-    justify-content: center;
+    flex-shrink: 0;
     gap: var(--spacing-md);
-    flex-wrap: wrap;
-    transform: skewY(2deg);
+    width:auto;
+   
+    
+    
+   
   }
 
   .ribbon-text {
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: var(--text-4xl);
     font-weight: var(--weight-bold);
     color: var(--white);
+    flex-wrap: nowrap;
+  
+
+    
   }
 
   .ribbon-separator {
@@ -68,4 +102,5 @@
       margin: var(--spacing-lg) 0;
     }
   }
+  .ribon-track{}
 </style>
