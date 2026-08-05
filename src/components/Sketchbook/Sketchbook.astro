@@ -250,3 +250,90 @@
     left:15px;
   }
 </style>
+
+<script type="module">
+// GSAP ScrollTrigger — Phase 1 only
+// - Pins the `.sketchbook-stage` section when reached
+// - Scrubs a timeline that moves the sketchbook to the viewport center
+//   and straightens its rotation to 0deg
+// - Structure includes clear placeholder comments for future phases
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
+
+function setupSketchbookPhase1() {
+  const section = document.querySelector('.sketchbook-stage');
+  const sketchbook = section?.querySelector('.sketchbook');
+  if (!section || !sketchbook) return;
+
+  // Compute the X translation required to center the sketchbook in viewport.
+  // Returning a function lets GSAP re-evaluate on refresh for responsive layouts.
+  const getCenterXOffset = () => {
+    const rect = sketchbook.getBoundingClientRect();
+    const currentCenter = rect.left + rect.width / 2;
+    const viewportCenter = window.innerWidth / 2;
+    return viewportCenter - currentCenter;
+  };
+
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: section,
+      start: 'top top',
+      // Keep the pin long enough for Phase 1; future phases can extend this
+      end: () => '+=' + Math.max(window.innerHeight * 1.2, 800),
+      pin: true,
+      scrub: true,
+      anticipatePin: 1,
+      invalidateOnRefresh: true,
+      // markers: true, // uncomment for debugging phase boundaries
+    }
+  });
+
+  // Phase 1: move to center (x) and straighten rotation. Only x & rotation
+  // are animated here to satisfy the requirement. Use ease 'none' so the
+  // scrub maps 1:1 with scroll progress.
+  tl.to(sketchbook, {
+    x: getCenterXOffset,
+    rotation: 0,
+    ease: 'none',
+    duration: 1,
+  });
+
+  // Placeholder: Phase 2+ — add page open / page-turn animations here later.
+  // Example (do not enable now):
+  // tl.addLabel('phase2-start');
+  // tl.to(coverEl, { rotationY: -120, duration: 1, ease: 'power1.inOut' });
+  // tl.to(pageEl, { x: '+=100%', duration: 1 });
+
+  // Responsive refresh handler
+  const onResize = () => ScrollTrigger.refresh();
+  window.addEventListener('resize', onResize);
+
+  // Cleanup for SPA/HMR/unload
+  function cleanup() {
+    try {
+      tl.kill();
+      ScrollTrigger.getAll().forEach(st => st.kill());
+    } catch (e) {}
+    window.removeEventListener('resize', onResize);
+  }
+
+  // Expose cleanup if needed externally
+  section._sketchbookPhase1Cleanup = cleanup;
+}
+
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupSketchbookPhase1, { once: true });
+  } else {
+    setupSketchbookPhase1();
+  }
+
+  // Ensure cleanup on unload
+  window.addEventListener('beforeunload', () => {
+    const section = document.querySelector('.sketchbook-stage');
+    if (section && section._sketchbookPhase1Cleanup) section._sketchbookPhase1Cleanup();
+  });
+}
+</script>
