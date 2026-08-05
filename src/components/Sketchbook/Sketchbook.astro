@@ -2,12 +2,251 @@
 // Sketchbook.astro
 ---
 
-<section class="sketchbook" id="sketchbook">
+
+<section class="sketchbook-stage">
   <div class="sketchbook">
-    <img src="src/assets/sketchbook.png" alt="Sketchbook">
+
+    <!-- Shadow -->
+    <div class="book-shadow"></div>
+
+    <!-- Pages -->
+    <div class="book-pages">
+      <div class="page page-3"></div>
+      <div class="page page-2"></div>
+      <div class="page page-1">
+        <div class="page-content">
+          <h3>Ideas</h3>
+          <p>Hand-painted signs</p>
+          <p>Truck typography</p>
+          <p>Matchbox labels</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cover -->
+    <div class="book-cover">
+      <div class="tape tape-1"></div>
+
+      <div class="cover-content">
+        <span class="label">SKETCHBOOK</span>
+
+        <h1>Sanskar</h1>
+
+        <p>Visual Notes • 2026</p>
+
+        <div class="doodle"></div>
+      </div>
+    </div>
+
   </div>
 </section>
 
 <style>
-  
+  :root{
+    --cover:#c62839;
+    --cover-dark:#9f1d2d;
+    --paper:#f8f3e6;
+    --ink:#1f1f1f;
+    --tape:#e7d4a3;
+  }
+
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+  }
+
+  .sketchbook-stage{
+    min-height:660px;
+    display:flex;
+    justify-content:flex-start;
+    align-items:center;
+
+    padding-left:5vw;
+
+    background: var(--yellow-base);
+  }
+
+  .sketchbook{
+    position:relative;
+
+    width:min(70vw,550px);
+    aspect-ratio:1/1;
+
+    transform:rotate(-8deg);
+  }
+
+  .book-shadow{
+    position:absolute;
+    inset:0;
+
+    transform:
+      translate(20px,20px);
+
+    background:rgba(0,0,0,.15);
+
+    filter:blur(20px);
+
+    border-radius:12px;
+  }
+
+  .book-pages{
+    position:absolute;
+    inset:0;
+  }
+
+  .page{
+    position:absolute;
+    inset:0;
+
+    background:var(--paper);
+
+    border-radius:10px;
+
+    border:1px solid rgba(0,0,0,.08);
+  }
+
+  .page-3{
+    transform:
+      translate(14px,14px);
+  }
+
+  .page-2{
+    transform:
+      translate(9px,9px);
+  }
+
+  .page-1{
+    transform:
+      translate(4px,4px);
+
+    overflow:hidden;
+  }
+
+  .page-content{
+    padding:40px;
+
+    font-family:"Kalam", cursive;
+
+    color:var(--ink);
+  }
+
+  .page-content h3{
+    margin-bottom:16px;
+    color:var(--cover);
+  }
+
+  .page-content p{
+    margin-bottom:10px;
+  }
+
+  .book-cover{
+    position:absolute;
+    inset:0;
+
+    background:
+      linear-gradient(
+        135deg,
+        var(--cover),
+        var(--cover-dark)
+      );
+
+    border-radius:12px;
+
+    border:4px solid #8f1828;
+
+    box-shadow:
+      0 20px 40px rgba(0,0,0,.25);
+
+    z-index:10;
+
+    transform-origin:left center;
+
+    overflow:hidden;
+  }
+
+  .cover-content{
+    height:100%;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+
+    text-align:center;
+
+    color:white;
+
+    padding:30px;
+  }
+
+  .label{
+    font-size:.8rem;
+
+    letter-spacing:3px;
+
+    border:2px solid rgba(255,255,255,.5);
+
+    padding:8px 14px;
+
+    margin-bottom:20px;
+  }
+
+  .cover-content h1{
+    font-size:3rem;
+
+    margin-bottom:10px;
+  }
+
+  .cover-content p{
+    opacity:.8;
+  }
+
+  .tape{
+    position:absolute;
+
+    width:120px;
+    height:35px;
+
+    background:var(--tape);
+
+    opacity:.8;
+
+    transform:
+      rotate(-12deg);
+  }
+
+  .tape-1{
+    top:20px;
+    left:20px;
+  }
+
+  .doodle{
+    width:100px;
+    height:100px;
+
+    margin-top:30px;
+
+    border:3px solid rgba(255,255,255,.5);
+
+    border-radius:50%;
+
+    position:relative;
+  }
+
+  .doodle::before{
+    content:"";
+
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    border:3px solid rgba(255,255,255,.5);
+
+    border-radius:50%;
+
+    top:15px;
+    left:15px;
+  }
 </style>

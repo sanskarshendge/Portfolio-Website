@@ -3,13 +3,61 @@
 ---
 
 <section class="red-ribbon">
-  <div class="ribbon-container">
-    <div class="ribbon-content">
-      <span class="ribbon-label">Cinematography</span>
-      <span class="ribbon-dot">•</span>
-      <span class="ribbon-label">Visual Storyteller</span>
-      <span class="ribbon-dot">•</span>
-      <span class="ribbon-label">Creative Director</span>
+  <div class="ribbon-track">
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Cinematography</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Visual Storyteller</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Creative Director</span>
+        <span class="ribbon-dot">•</span>
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Cinematography</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Visual Storyteller</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Creative Director</span>
+        <span class="ribbon-dot">•</span>
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Cinematography</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Visual Storyteller</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Creative Director</span>
+        <span class="ribbon-dot">•</span>
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Cinematography</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Visual Storyteller</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Creative Director</span>
+        <span class="ribbon-dot">•</span>
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Cinematography</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Visual Storyteller</span>
+        <span class="ribbon-dot">•</span>
+        <span class="ribbon-label">Creative Director</span>
+        <span class="ribbon-dot">•</span>
+      </div>
     </div>
   </div>
 </section>
@@ -21,34 +69,57 @@
     padding: var(--spacing-lg) 0;
     margin: var(--spacing-xl) 0;
     overflow: hidden;
-    transform: skewY(-2deg);
+    transform: skewY(2deg);
+  }
+
+  .ribbon-track {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    will-change: transform;
+    animation: marquee-right 18s linear infinite;
   }
 
   .ribbon-container {
-    max-width: 100%;
+    flex: 0 0 auto;
     padding: 0 var(--spacing-md);
   }
 
   .ribbon-content {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: var(--spacing-md);
-    flex-wrap: wrap;
-    transform: skewY(2deg);
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .ribbon-label {
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: var(--text-4xl);
     font-weight: var(--weight-bold);
     color: var(--white);
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .ribbon-dot {
     font-size: var(--text-2xl);
     color: var(--white);
     opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .red-ribbon:hover .ribbon-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-right {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
   }
 
   /* Mobile Responsive */
