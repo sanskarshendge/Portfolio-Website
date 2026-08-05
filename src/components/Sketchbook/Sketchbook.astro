@@ -11,15 +11,39 @@
 
     <!-- Pages -->
     <div class="book-pages">
-      <div class="page page-3"></div>
-      <div class="page page-2"></div>
-      <div class="page page-1">
-        <div class="page-content">
-          <h3>Ideas</h3>
-          <p>Hand-painted signs</p>
-          <p>Truck typography</p>
-          <p>Matchbox labels</p>
+      <div class="page page-3">
+        <div class="page-inner">
+          <div class="page-face page-front">
+            <div class="page-paper"></div>
+          </div>
+          <div class="page-face page-back"></div>
         </div>
+        <div class="page-edge"></div>
+      </div>
+
+      <div class="page page-2">
+        <div class="page-inner">
+          <div class="page-face page-front">
+            <div class="page-paper"></div>
+          </div>
+          <div class="page-face page-back"></div>
+        </div>
+        <div class="page-edge"></div>
+      </div>
+
+      <div class="page page-1">
+        <div class="page-inner">
+          <div class="page-face page-front">
+            <div class="page-content">
+              <h3>Ideas</h3>
+              <p>Hand-painted signs</p>
+              <p>Truck typography</p>
+              <p>Matchbox labels</p>
+            </div>
+          </div>
+          <div class="page-face page-back"></div>
+        </div>
+        <div class="page-edge"></div>
       </div>
     </div>
 
@@ -74,6 +98,9 @@
     aspect-ratio:1/1;
 
     transform:rotate(-8deg);
+    /* enable 3D children and give a perspective for realistic rotateY */
+    transform-style: preserve-3d;
+    perspective: 1200px;
   }
 
   .book-shadow{
@@ -93,34 +120,92 @@
   .book-pages{
     position:absolute;
     inset:0;
+    transform-style: preserve-3d;
   }
 
   .page{
     position:absolute;
     inset:0;
 
+    transform-style: preserve-3d;
+    backface-visibility: visible;
+    -webkit-backface-visibility: visible;
+    transform-origin: left center;
+    will-change: transform;
+  }
+
+  .page-inner{
+    position:absolute;
+    inset:0;
+    transform-style: preserve-3d;
+  }
+
+  .page-face{
+    position:absolute;
+    inset:0;
+
     background:var(--paper);
-
     border-radius:10px;
-
     border:1px solid rgba(0,0,0,.08);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.4);
+
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+
+    overflow:hidden;
+    display:flex;
+    justify-content:flex-start;
+    align-items:flex-start;
+  }
+
+  .page-front{
+    transform: rotateY(0deg);
+    z-index: 2;
+  }
+
+  .page-back{
+    transform: rotateY(180deg);
+    z-index: 1;
+    background: linear-gradient(180deg, rgba(248,243,230,1), rgba(235,225,200,1));
+  }
+
+  .page-back::before{
+    content: "";
+    position: absolute;
+    inset: 24px 20px 24px;
+    background-image: linear-gradient(rgba(0,0,0,.04) 1px, transparent 1px);
+    background-size: 100% 28px;
+    opacity: .25;
+  }
+
+  .page-edge{
+    position:absolute;
+    top:12px;
+    right:-8px;
+    width:8px;
+    height:calc(100% - 24px);
+    background: linear-gradient(90deg, rgba(255,255,255,.9), rgba(0,0,0,.08));
+    border-radius:0 4px 4px 0;
+    pointer-events:none;
   }
 
   .page-3{
     transform:
       translate(14px,14px);
+    z-index:20;
   }
 
   .page-2{
     transform:
       translate(9px,9px);
+    z-index:80;
   }
 
   .page-1{
     transform:
       translate(4px,4px);
-
-    overflow:hidden;
+    z-index:90;
   }
 
   .page-content{
@@ -138,6 +223,12 @@
 
   .page-content p{
     margin-bottom:10px;
+  }
+
+  .page-paper{
+    position:absolute;
+    inset:0;
+    background: linear-gradient(180deg, rgba(248,243,230,1) 0%, rgba(246,239,219,1) 100%);
   }
 
   .book-cover{
@@ -158,9 +249,14 @@
     box-shadow:
       0 20px 40px rgba(0,0,0,.25);
 
-    z-index:10;
+    z-index:100;
 
+    /* cover opens around the left spine */
     transform-origin:left center;
+    transform-style: preserve-3d;
+    backface-visibility:visible;
+    -webkit-backface-visibility: visible;
+    will-change: transform;
 
     overflow:hidden;
   }
@@ -280,8 +376,8 @@ function setupSketchbookPhase1() {
     scrollTrigger: {
       trigger: section,
       start: 'top top',
-      // Keep the pin long enough for Phase 1; future phases can extend this
-      end: () => '+=' + Math.max(window.innerHeight * 1.2, 800),
+      // Reserve roughly 4x viewport height for all 4 phases (center, cover, page1, page2)
+      end: () => '+=' + Math.max(window.innerHeight * 4, 2400),
       pin: true,
       scrub: true,
       anticipatePin: 1,
@@ -300,11 +396,51 @@ function setupSketchbookPhase1() {
     duration: 1,
   });
 
-  // Placeholder: Phase 2+ — add page open / page-turn animations here later.
-  // Example (do not enable now):
-  // tl.addLabel('phase2-start');
-  // tl.to(coverEl, { rotationY: -120, duration: 1, ease: 'power1.inOut' });
-  // tl.to(pageEl, { x: '+=100%', duration: 1 });
+  // --- Phase 2: Open cover (rotateY around left spine) ------------------
+  const cover = section.querySelector('.book-cover');
+  if (cover) {
+    // ensure starting state
+    gsap.set(cover, { rotationY: 0 });
+    // bring cover above pages while it opens
+    tl.set(cover, { zIndex: 100 });
+    tl.to(cover, {
+      rotationY: -180,
+      transformOrigin: 'left center',
+      ease: 'none',
+      duration: 1,
+    });
+  }
+
+  // --- Phase 3: Flip first page (rotateY around left spine) -------------
+  const page1 = section.querySelector('.page-1');
+  if (page1) {
+    gsap.set(page1, { rotationY: 0 });
+    tl.set(page1, { zIndex: 90});
+    tl.to(page1, {
+      rotationY: -165,
+      transformOrigin: 'left center',
+      x: -26,
+      duration: 1,
+      ease: 'none',
+    });
+  }
+
+  // --- Phase 4: Flip second page --------------------------------------
+  const page2 = section.querySelector('.page-2');
+  if (page2) {
+    gsap.set(page2, { rotationY: 0 });
+    tl.set(page2, { zIndex: 80 });
+    tl.to(page2, {
+      rotationY: -170,
+      transformOrigin: 'left center',
+      x: -18,
+      duration: 1,
+      ease: 'none',
+    });
+  }
+
+  // When the timeline completes (scroll reaches `end`) the pin will be
+  // released automatically and normal scrolling resumes.
 
   // Responsive refresh handler
   const onResize = () => ScrollTrigger.refresh();
