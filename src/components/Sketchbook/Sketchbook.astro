@@ -82,11 +82,15 @@
 
   .sketchbook-stage{
     min-height:660px;
+    height: calc(100vh - var(--sketchbook-offset, 120px));
     display:flex;
     justify-content:flex-start;
     align-items:center;
 
+    padding-top:32px;
     padding-left:5vw;
+    padding-right:5vw;
+    padding-bottom:40px;
 
     background: var(--yellow-base);
   }
@@ -372,10 +376,16 @@ function setupSketchbookPhase1() {
     return viewportCenter - currentCenter;
   };
 
+  const header = document.querySelector('.navbar');
+  const headerHeight = header?.offsetHeight || 88;
+  const safeOffset = headerHeight + 40;
+
+  section.style.setProperty('--sketchbook-offset', `${safeOffset}px`);
+
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: section,
-      start: 'top top',
+      start: () => `top top+=${safeOffset}`,
       // Reserve roughly 4x viewport height for all 4 phases (center, cover, page1, page2)
       end: () => '+=' + Math.max(window.innerHeight * 4, 2400),
       pin: true,
