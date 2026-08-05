@@ -11,7 +11,7 @@
 
     <!-- Pages -->
     <div class="book-pages">
-      <div class="page page-3">
+      <div class="page page-3" data-page-index="3">
         <div class="page-inner">
           <div class="page-face page-front">
             <div class="page-paper"></div>
@@ -21,7 +21,7 @@
         <div class="page-edge"></div>
       </div>
 
-      <div class="page page-2">
+      <div class="page page-2" data-page-index="2" data-auto-flip="true">
         <div class="page-inner">
           <div class="page-face page-front">
             <div class="page-paper"></div>
@@ -31,7 +31,7 @@
         <div class="page-edge"></div>
       </div>
 
-      <div class="page page-1">
+      <div class="page page-1" data-page-index="1" data-auto-flip="true">
         <div class="page-inner">
           <div class="page-face page-front">
             <div class="page-content">
@@ -62,6 +62,11 @@
       </div>
     </div>
 
+    <div class="sketchbook-nav" aria-hidden="true">
+      <button type="button" class="sketchbook-arrow sketchbook-arrow--prev" aria-label="Previous page">‹</button>
+      <button type="button" class="sketchbook-arrow sketchbook-arrow--next" aria-label="Next page">›</button>
+    </div>
+
   </div>
 </section>
 
@@ -81,13 +86,13 @@
   }
 
   .sketchbook-stage{
-    min-height:660px;
+    min-height:600px;
     height: calc(100vh - var(--sketchbook-offset, 120px));
     display:flex;
     justify-content:flex-start;
     align-items:center;
 
-    padding-top:32px;
+    padding-top:10px;
     padding-left:5vw;
     padding-right:5vw;
     padding-bottom:40px;
@@ -191,6 +196,55 @@
     height:calc(100% - 24px);
     background: linear-gradient(90deg, rgba(255,255,255,.9), rgba(0,0,0,.08));
     border-radius:0 4px 4px 0;
+    pointer-events:none;
+  }
+
+  .sketchbook-nav{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+  }
+
+  .sketchbook-arrow{
+    position:absolute;
+    top:50%;
+    width:44px;
+    height:44px;
+    transform:translateY(-50%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border:none;
+    border-radius:50%;
+    background:rgba(255,255,255,.92);
+    color:var(--ink);
+    font-size:1.75rem;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 12px 24px rgba(0,0,0,.12);
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+    transition:opacity .35s ease, visibility .35s ease, transform .35s ease;
+  }
+
+  .sketchbook-arrow--prev{
+    left:-64px;
+  }
+
+  .sketchbook-arrow--next{
+    right:-64px;
+  }
+
+  .sketchbook-nav.visible .sketchbook-arrow{
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+  }
+
+  .sketchbook-arrow.hidden{
+    opacity:0;
+    visibility:hidden;
     pointer-events:none;
   }
 
@@ -378,7 +432,7 @@ function setupSketchbookPhase1() {
 
   const header = document.querySelector('.navbar');
   const headerHeight = header?.offsetHeight || 88;
-  const safeOffset = headerHeight + 40;
+  const safeOffset = headerHeight + 16;
 
   section.style.setProperty('--sketchbook-offset', `${safeOffset}px`);
 
@@ -448,6 +502,93 @@ function setupSketchbookPhase1() {
       ease: 'none',
     });
   }
+
+  const pages = Array.from(section.querySelectorAll('.page[data-page-index]'))
+    .sort((a, b) => Number(a.dataset.pageIndex) - Number(b.dataset.pageIndex));
+
+  const navigation = section.querySelector('.sketchbook-nav');
+  const prevArrow = navigation.querySelector('.sketchbook-arrow--prev');
+  const nextArrow = navigation.querySelector('.sketchbook-arrow--next');
+
+  const initialFlippedPageIndex = Math.max(
+    0,
+    ...pages
+      .filter((page) => page.dataset.autoFlip === 'true')
+      .map((page) => Number(page.dataset.pageIndex))
+  );
+
+  let currentPageIndex = initialFlippedPageIndex;
+  const lastPageIndex = pages.length;
+
+  function updateNavigation() {
+    if (!navigation) return;
+
+    prevArrow.classList.toggle('hidden', currentPageIndex <= initialFlippedPageIndex);
+    nextArrow.classList.toggle('hidden', currentPageIndex >= lastPageIndex);
+  }
+
+  function showNavigation() {
+    if (!navigation) return;
+    if (lastPageIndex <= initialFlippedPageIndex) return;
+    navigation.classList.add('visible');
+    navigation.setAttribute('aria-hidden', 'false');
+    updateNavigation();
+  }
+
+  function hideNavigation() {
+    if (!navigation) return;
+    navigation.classList.remove('visible');
+    navigation.setAttribute('aria-hidden', 'true');
+  }
+
+  function nextPage() {
+    if (currentPageIndex >= lastPageIndex) return;
+    const nextPageIndex = currentPageIndex + 1;
+    const nextPage = pages.find((page) => Number(page.dataset.pageIndex) === nextPageIndex);
+    if (!nextPage) return;
+
+    gsap.set(nextPage, { zIndex: 100 + nextPageIndex });
+    gsap.to(nextPage, {
+      rotationY: -180,
+      x: -18 - (nextPageIndex - initialFlippedPageIndex - 1) * 6,
+      transformOrigin: 'left center',
+      duration: 0.9,
+      ease: 'power1.out',
+    });
+
+    currentPageIndex = nextPageIndex;
+    updateNavigation();
+  }
+
+  function previousPage() {
+    if (currentPageIndex <= initialFlippedPageIndex) return;
+    const currentPage = pages.find((page) => Number(page.dataset.pageIndex) === currentPageIndex);
+    if (!currentPage) return;
+
+    gsap.to(currentPage, {
+      rotationY: 0,
+      x: 0,
+      transformOrigin: 'left center',
+      duration: 0.9,
+      ease: 'power1.out',
+    });
+
+    currentPageIndex -= 1;
+    updateNavigation();
+  }
+
+  nextArrow.addEventListener('click', (event) => {
+    event.stopPropagation();
+    nextPage();
+  });
+
+  prevArrow.addEventListener('click', (event) => {
+    event.stopPropagation();
+    previousPage();
+  });
+
+  tl.eventCallback('onComplete', showNavigation);
+  tl.eventCallback('onReverseComplete', hideNavigation);
 
   // When the timeline completes (scroll reaches `end`) the pin will be
   // released automatically and normal scrolling resumes.
