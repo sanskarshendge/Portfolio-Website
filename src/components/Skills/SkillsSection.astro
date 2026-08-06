@@ -31,7 +31,7 @@ import skills from '../../data/skills.json';
 
   .skills-container {
     display: flex;
-    flex-direction: ;
+    flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
@@ -47,8 +47,11 @@ import skills from '../../data/skills.json';
   }
   .skills-grid {
     display:flex;
-    flex-wrap:wrap;
-    gap:2rem;
+    flex-direction:column;
+    text-align:center;
+    justify-content:center;
+    flex-wrap:nowrap;
+    gap:0rem;
   
   }
  
@@ -71,23 +74,32 @@ import skills from '../../data/skills.json';
  .flip-word{
   position:relative;
   overflow:hidden;
-  height:1.2em;
+  height:2em;
   cursor:pointer;
   line-height:1;
 }
 .word{
-  display:block;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   font-size:2rem;
   font-weight:700;
   transition:transform 0.45s cubic-bezier(.76,0,.24,1);
+  
   /*transition:transform 0.35s cubic-bezier(.22,.61,.36,1);*/
 }
 .duplicate{
+  display:flex;
+  justify-content:center;
+  align-items:center;
   position:absolute;
   left:0;
   top:100%;
 }
 .flip-word:hover .word{
+  display:flex;
+  justify-content:center;
+  align-items:center;
   transform:translateY(-100%);
 }
 
