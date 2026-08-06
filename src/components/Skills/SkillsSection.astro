@@ -6,26 +6,32 @@ import skills from '../../data/skills.json';
 <section class="skills" id="skills">
   <div class="skills-container">
     <h2 class="skills-title">Skills & Expertise</h2>
-    
+
     <div class="skills-grid">
       {skills.map((skill) => (
-       
-          <h3 class="skill-name">{skill.name}</h3>
+        <div class="flip-word">
+          <span class="word">{skill.name}</span>
+          <span class="word duplicate">{skill.name}</span>
+        </div>
       ))}
     </div>
+
   </div>
 </section>
-
 <style>
   .skills {
     display: flex;
+    
     width: 100%;
     align-items: center;
     background-color: var(--yellow-base);
     padding: var(--spacing-2xl) 0;
+    perspective: 1000px;
   }
 
   .skills-container {
+    display: flex;
+    flex-direction: ;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-md);
@@ -41,14 +47,11 @@ import skills from '../../data/skills.json';
   }
   .skills-grid {
     display:flex;
-    flex-direction: column;
-    text-align: center;
-    align-items: center;
+    flex-wrap:wrap;
+    gap:2rem;
   
   }
-  .skill-grid:hover{
-    
-  }
+ 
   .h3{
     margin-bottom: var(--spacing-xs);
   }
@@ -65,6 +68,30 @@ import skills from '../../data/skills.json';
     color: var(--gray-dark);
     line-height: var(--leading-relaxed);
   }
+ .flip-word{
+  position:relative;
+  overflow:hidden;
+  height:1.2em;
+  cursor:pointer;
+  line-height:1;
+}
+.word{
+  display:block;
+  font-size:2rem;
+  font-weight:700;
+  transition:transform 0.45s cubic-bezier(.76,0,.24,1);
+  /*transition:transform 0.35s cubic-bezier(.22,.61,.36,1);*/
+}
+.duplicate{
+  position:absolute;
+  left:0;
+  top:100%;
+}
+.flip-word:hover .word{
+  transform:translateY(-100%);
+}
+
+
 
   /* Mobile Responsive */
   @media (max-width: 768px) {
