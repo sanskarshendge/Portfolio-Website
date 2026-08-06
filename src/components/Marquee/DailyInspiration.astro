@@ -1,0 +1,112 @@
+---
+// DailyInspiration.astro
+---
+
+<section class="daily-inspiration">
+  <div class="ribbon-track">
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Art Direction</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Branding</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Ui/Ux</span>
+      </div>
+    </div>
+   
+  </div>
+</section>
+
+<style>
+  .daily-inspiration {
+    width: 100%;
+    background-color: var(--blue-primary);
+    padding: var(--spacing-lg) 0;
+    margin: var(--spacing-xl) 0;
+    overflow: hidden;
+    transform: skewY(0deg);
+  }
+
+  .ribbon-track {
+      display: flex;
+      width: max-content;
+      align-items: center;
+      will-change: transform;
+      animation: marquee-left 18s linear infinite;
+  }
+
+  .ribbon-container {
+    flex: 0 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .ribbon-content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ribbon-text {
+    font-family: var(--font-display);
+    font-size: var(--text-4xl);
+    font-weight: var(--weight-bold);
+    color: var(--white);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .ribbon-separator {
+    font-size: var(--text-2xl);
+    color: var(--white);
+    opacity: 0.6;
+    flex-shrink: 0;
+  }
+
+  .daily-inspiration:hover .ribbon-track {
+    animation-play-state: paused;
+  }
+
+  @keyframes marquee-left {
+    from {
+        transform: translate3d(-50%, 0, 0); 
+    }
+    to {
+       transform: translate3d(0, 0, 0);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ribbon-text {
+      font-size: var(--text-lg);
+    }
+
+    .ribbon-separator {
+      font-size: var(--text-lg);
+    }
+
+    .daily-inspiration {
+      padding: var(--spacing-md) 0;
+      margin: var(--spacing-lg) 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ribbon-track {
+      animation: none !important;
+      transform: none !important;
+    }
+
+    .daily-inspiration:hover .ribbon-track {
+      animation: none !important;
+    }
+  }
+</style>

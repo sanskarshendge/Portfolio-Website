@@ -1,5 +1,6 @@
 ---
 // RedRibbon.astro
+import runningGif from '../../assets/running.gif';
 ---
 
 <section class="red-ribbon">
@@ -64,12 +65,14 @@
 
 <style>
   .red-ribbon {
+    position:relative;
     width: 100%;
     background-color: var(--red-primary);
-    padding: var(--spacing-lg) 0;
+   /* padding: var(--spacing-lg) 0;*/
     margin: var(--spacing-xl) 0;
     overflow: hidden;
     transform: skewY(2deg);
+    padding: var(--spacing-lg);
   }
 
   .ribbon-track {
@@ -100,6 +103,7 @@
     color: var(--white);
     white-space: nowrap;
     flex-shrink: 0;
+    padding: var(--spacing-xs);
   }
 
   .ribbon-dot {
@@ -112,6 +116,22 @@
   .red-ribbon:hover .ribbon-track {
     animation-play-state: paused;
   }
+  .runner{
+  position:relative;
+
+  left:15%;
+  top:0;
+
+  transform:
+    translateY(-70%)
+    skewY(-2deg);
+
+  z-index:100;
+
+  pointer-events:none;
+}
+
+
 
   @keyframes marquee-right {
     from {
