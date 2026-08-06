@@ -31,6 +31,7 @@ import skills from '../../data/skills.json';
 
   .skills-container {
     display: flex;
+    align-items: center;
     flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
@@ -49,7 +50,7 @@ import skills from '../../data/skills.json';
     display:flex;
     flex-direction:column;
     text-align:center;
-    justify-content:center;
+    justify-content:center; 
     flex-wrap:nowrap;
     gap:0rem;
   
@@ -59,8 +60,10 @@ import skills from '../../data/skills.json';
     margin-bottom: var(--spacing-xs);
   }
   .skill-name {
+    align-items: center;
+    display: flex;
     font-family: var(--font-display);
-    font-size: var(--text-2xl);
+    font-size: var(--text-3xl);
     font-weight: var(--weight-bold);
     color: var(--black);
   }
@@ -72,29 +75,41 @@ import skills from '../../data/skills.json';
     line-height: var(--leading-relaxed);
   }
  .flip-word{
+  display:flex;
+  justify-content:center;
+  font-size:var(--text-5xl);
+  align-items: center;
   position:relative;
   overflow:hidden;
-  height:2em;
+  height:1.1em;
   cursor:pointer;
   line-height:1;
+  background-color:var(--blue-base);
+  
 }
 .word{
   display:flex;
   justify-content:center;
   align-items:center;
-  font-size:2rem;
+  font-size:var(--text-5xl);
   font-weight:700;
-  transition:transform 0.45s cubic-bezier(.76,0,.24,1);
+ /* transition:transform 0.25s cubic-bezier(.76,0,.24,1);*/
   
-  /*transition:transform 0.35s cubic-bezier(.22,.61,.36,1);*/
+  transition:transform 0.25s cubic-bezier(.22,.61,.36,1);
 }
 .duplicate{
   display:flex;
   justify-content:center;
   align-items:center;
+  font-size:var(--text-5xl);
   position:absolute;
+  transform:translatex(-50%) 
   left:0;
   top:100%;
+  color:var(--blue-base);
+  
+ 
+  
 }
 .flip-word:hover .word{
   display:flex;
