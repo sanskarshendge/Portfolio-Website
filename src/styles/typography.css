@@ -1,8 +1,17 @@
+  @font-face {
+  font-family: 'Minecraft';
+  src: url('/fonts/Minecraft.ttf') format('truetype');
+  
+}
+
 /* Typography System */
 :root {
   /* Font Families */
-  --font-display: 'Pixelify Sans';
+ /* --font-display: 'Pixelify Sans';*/
+
+  --font-display:'Minecraft';  
   --font-body: 'Londrina Solid';
+
   
   /* Font Sizes */
   --text-xs: 0.75rem;
