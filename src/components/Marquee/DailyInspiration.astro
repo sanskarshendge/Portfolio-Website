@@ -1,22 +1,54 @@
 ---
 // DailyInspiration.astro
+const today= new Date();
+const formattedDate = today.toLocaleDateString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric"
+});
 ---
-
+<section class="Date"> 
+  <div class="date-stamp">
+  {formattedDate}
+</div>
+</section>
 <section class="daily-inspiration">
+ 
   <div class="ribbon-track">
     <div class="ribbon-container">
       <div class="ribbon-content">
-        <span class="ribbon-text">Photography</span>
+        <span class="ribbon-text">Today's Inspiration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Illustration</span>
+        <span class="ribbon-text">Collection of my Today's inspuration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Art Direction</span>
+        
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Today's Inspiration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Visual Storytelling</span>
+        <span class="ribbon-text">Collection of my Today's inspuration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Branding</span>
+        
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Today's Inspiration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Ui/Ux</span>
+        <span class="ribbon-text">Collection of my Today's inspuration</span>
+        <span class="ribbon-separator">•</span>
+        
+      </div>
+    </div>
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Today's Inspiration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Collection of my Today's inspuration</span>
+        <span class="ribbon-separator">•</span>
+        
       </div>
     </div>
    
@@ -27,7 +59,6 @@
   .daily-inspiration {
     width: 100%;
     background-color: var(--blue-primary);
-    padding: var(--spacing-lg) 0;
     margin: var(--spacing-xl) 0;
     overflow: hidden;
     transform: skewY(0deg);
@@ -77,10 +108,10 @@
 
   @keyframes marquee-left {
     from {
-        transform: translate3d(-50%, 0, 0); 
+        transform: translate3d(0%, 0, 0); 
     }
     to {
-       transform: translate3d(0, 0, 0);
+        transform: translate3d(-50%, 0, 0); 
     }
   }
 
