@@ -1,0 +1,7 @@
+---
+import { getPinterestPins } from "../lib/pinterest";
+
+const data = await getPinterestPins();
+---
+
+<pre>{JSON.stringify(data, null, 2)}</pre>
