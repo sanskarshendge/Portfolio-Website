@@ -1,6 +1,6 @@
   @font-face {
-  font-family: 'Minecraft';
-  src: url('/fonts/Minecraft.ttf') format('truetype');
+  font-family: 'Tribal-Broots';
+  src: url('/fonts/Tribal-Broots.otf') format('truetype');
   
 }
 
@@ -9,7 +9,7 @@
   /* Font Families */
  /* --font-display: 'Pixelify Sans';*/
 
-  --font-display:'Minecraft';  
+  --font-display:'Tribal-Broots';  
   --font-body: 'Londrina Solid';
 
   
