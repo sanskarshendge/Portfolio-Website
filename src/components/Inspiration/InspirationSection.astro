@@ -57,10 +57,11 @@ import DailyInspiration from '../Marquee/DailyInspiration.astro';
   }
 
   .inspiration-grid {
-    padding: var(--spacing-md);
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: var(--spacing-xs);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+    
   }
 
   .inspiration-card {
@@ -80,7 +81,7 @@ import DailyInspiration from '../Marquee/DailyInspiration.astro';
     width: 100%;
     padding-bottom: 100%;
     background-color: var(--gray-light);
-    border-radius: var(--radius-lg);
+    border-radius: var(--radius-sm);
     border: var(--border-medium) solid var(--black);
     overflow: hidden;
     display: flex;

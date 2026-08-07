@@ -1,50 +1,43 @@
 [
   {
     "id": 1,
-    "date": "August 2024",
-    "title": "Inspiration Title 1",
+    
     "image": "/placeholder-inspiration-1.jpg"
   },
   {
     "id": 2,
-    "date": "August 2024",
-    "title": "Inspiration Title 2",
+    
+    
     "image": "/placeholder-inspiration-2.jpg"
   },
   {
     "id": 3,
-    "date": "August 2024",
-    "title": "Inspiration Title 3",
+    
     "image": "/placeholder-inspiration-3.jpg"
   },
   {
     "id": 4,
-    "date": "August 2024",
-    "title": "Inspiration Title 4",
+    
     "image": "/placeholder-inspiration-4.jpg"
   },
   {
     "id": 5,
-    "date": "August 2024",
-    "title": "Inspiration Title 5",
+   
     "image": "/placeholder-inspiration-5.jpg"
   },
   {
     "id": 6,
-    "date": "August 2024",
-    "title": "Inspiration Title 6",
+    
     "image": "/placeholder-inspiration-6.jpg"
   },
   {
     "id": 7,
-    "date": "August 2024",
-    "title": "Inspiration Title 7",
+    
     "image": "/placeholder-inspiration-7.jpg"
   },
   {
     "id": 8,
-    "date": "August 2024",
-    "title": "Inspiration Title 8",
+    
     "image": "/placeholder-inspiration-8.jpg"
   }
 ]
