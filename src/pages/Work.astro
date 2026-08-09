@@ -93,13 +93,49 @@ const projects: Project[] = [
   </head>
   <body>
     <WorkCanvas projects={projects} />
+    
+    <a href="/" class="back-button" aria-label="Go back to home">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="19" y1="12" x2="5" y2="12"></line>
+        <polyline points="12 19 5 12 12 5"></polyline>
+      </svg>
+      Back
+    </a>
   </body>
 </html>
 
-<style >
+<style>
   body {
     margin: 0;
     padding: 0;
-    background-color: var( --blue-primary);
+    background-color: var(--blue-primary);
+  }
+
+  .back-button {
+    position: fixed;
+    top: 32px;
+    left: 32px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background: rgba(20, 19, 17, 0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(237, 230, 214, 0.25);
+    border-radius: 999px;
+    color: #ede6d6;
+    text-decoration: none;
+    font-family: var(--font-display, 'Fraunces', serif);
+    font-size: 0.9rem;
+    font-weight: 500;
+    z-index: 100;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+
+  .back-button:hover {
+    background: rgba(20, 19, 17, 0.85);
+    transform: scale(1.05);
+    color: #fff;
   }
 </style>
