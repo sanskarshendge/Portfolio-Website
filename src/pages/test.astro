@@ -1,7 +1,9 @@
 ---
-import { getPinterestPins } from "../lib/pinterest";
+import { getPinterestBoards } from "../lib/pinterest";
 
-const data = await getPinterestPins();
+const boards = await getPinterestBoards();
 ---
 
-<pre>{JSON.stringify(data, null, 2)}</pre>
+<pre>
+{JSON.stringify(boards, null, 2)}
+</pre>

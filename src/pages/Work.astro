@@ -2,6 +2,7 @@
 // src/pages/work.astro
 import WorkCanvas from "../components/work-section/WorkCanvas.astro";
 import type { Project } from "../components/work-section/WorkCanvas.astro";
+import '../styles/global.css';
 
 // Replace with real content later — e.g. pull from a src/content collection.
 const projects: Project[] = [
@@ -95,11 +96,10 @@ const projects: Project[] = [
   </body>
 </html>
 
-<style is:global>
-  html,
+<style >
   body {
     margin: 0;
     padding: 0;
-    background: #141311;
+    background-color: var( --blue-primary);
   }
 </style>

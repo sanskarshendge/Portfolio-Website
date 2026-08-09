@@ -1,8 +1,10 @@
-export async function getPinterestPins() {
+// src/lib/pinterest.js
+
+export async function getPinterestBoards() {
   const token = import.meta.env.PINTEREST_ACCESS_TOKEN;
 
   const response = await fetch(
-    "https://api-sandbox.pinterest.com/v5/boards",
+    "https://api.pinterest.com/v5/boards",
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -10,5 +12,9 @@ export async function getPinterestPins() {
     }
   );
 
-  return response.json();
+  const data = await response.json();
+
+  console.log(data);
+
+  return data;
 }
