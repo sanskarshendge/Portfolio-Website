@@ -1,7 +1,7 @@
 ---
 // InspirationSection.astro
-import inspiration from '../../data/inspiration.json';
 import DailyInspiration from '../Marquee/DailyInspiration.astro';
+import InspirationFeed from './InspirationFeed.astro';
 ---
 
 <section class="inspiration" id="inspiration">
@@ -9,17 +9,7 @@ import DailyInspiration from '../Marquee/DailyInspiration.astro';
     <DailyInspiration />
   </div>
   <div class="inspiration-container">
-    <div class="inspiration-grid">
-      {inspiration.map((item) => (
-        <div class="inspiration-card">
-          <div class="inspiration-image">
-            <img src={item.image} />
-            
-          </div>
-          
-        </div>
-      ))}
-    </div>
+    <InspirationFeed />
   </div>
 </section>
 
@@ -34,7 +24,7 @@ import DailyInspiration from '../Marquee/DailyInspiration.astro';
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 var(--spacing-xs);
-    color:grey;
+    color: grey;
   }
 
   .inspiration-header {
@@ -56,79 +46,10 @@ import DailyInspiration from '../Marquee/DailyInspiration.astro';
     color: var(--gray-dark);
   }
 
-  .inspiration-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-    
-  }
-
-  .inspiration-card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    cursor: pointer;
-    transition: transform var(--transition-normal);
-  }
-
-  .inspiration-card:hover {
-    transform: translateY(-4px);
-  }
-
-  .inspiration-image {
-    position: relative;
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--gray-light);
-    border-radius: var(--radius-sm);
-    border: var(--border-medium) solid var(--black);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-body);
-    color: var(--gray-medium);
-    font-size: var(--text-sm);
-  }
-
-  .inspiration-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  .inspiration-date {
-    position: absolute;
-    bottom: var(--spacing-sm);
-    left: var(--spacing-sm);
-    background-color: rgba(0, 0, 0, 0.7);
-    color: var(--white);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    border-radius: var(--radius-sm);
-    font-family: var(--font-body);
-    font-size: var(--text-xs);
-  }
-
-  .inspiration-title-card {
-    font-family: var(--font-body);
-    font-size: var(--text-sm);
-    color: var(--black);
-    line-height: var(--leading-normal);
-  }
-
   /* Mobile Responsive */
   @media (max-width: 768px) {
     .inspiration-title {
       font-size: var(--text-3xl);
-    }
-
-    .inspiration-grid {
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: var(--spacing-md);
     }
   }
 </style>

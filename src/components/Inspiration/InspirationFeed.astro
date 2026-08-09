@@ -1,0 +1,352 @@
+---
+// InspirationFeed.astro
+import { Image } from "astro:assets";
+import fs from "node:fs";
+import path from "node:path";
+
+// Automatically import all supported image formats from src/assets/inspiration/
+const imageModules = import.meta.glob<{ default: ImageMetadata }>(
+  "../../assets/inspiration/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}",
+  { eager: true },
+);
+
+// Map and sort images by last modified date (newest files first)
+const images = Object.entries(imageModules)
+  .map(([filepath, mod]) => {
+    const filename = path.basename(filepath);
+    let mtime = 0;
+    try {
+      const absolutePath = path.resolve(
+        process.cwd(),
+        "src/assets/inspiration",
+        filename,
+      );
+      if (fs.existsSync(absolutePath)) {
+        mtime = fs.statSync(absolutePath).mtimeMs;
+      }
+    } catch (err) {
+      mtime = 0;
+    }
+    const imgData = (mod as any).default || mod;
+    return {
+      image: imgData as ImageMetadata,
+      path: filepath,
+      filename: filename,
+      mtime,
+    };
+  })
+  .sort((a, b) => b.mtime - a.mtime);
+---
+
+<div class="inspiration-feed-wrapper">
+  {
+    images.length === 0 ? (
+      <div class="inspiration-empty">
+        <p>
+          No images found in <code>src/assets/inspiration/</code>. Paste your
+          images into that folder to auto-populate the feed!
+        </p>
+      </div>
+    ) : (
+      <div class="inspiration-masonry-grid">
+        {images.map((item, index) => {
+          const title = item.filename
+            .replace(/\.[^/.]+$/, "")
+            .replace(/[-_]/g, " ");
+
+          return (
+            <div
+              class="inspiration-card"
+              data-src={item.image.src}
+              data-title={title}
+            >
+              <div class="inspiration-image-container">
+                <Image
+                  src={item.image}
+                  alt={title}
+                  widths={[300, 600, 900]}
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  loading={index < 4 ? "eager" : "lazy"}
+                  class="inspiration-img"
+                />
+                <div class="inspiration-overlay">
+                  <span class="view-badge">Click to enlarge</span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    )
+  }
+
+  <!-- Lightbox Modal for Enlarged View -->
+  <div id="inspiration-lightbox" class="lightbox" aria-hidden="true">
+    <div class="lightbox-backdrop"></div>
+    <div class="lightbox-dialog">
+      <button
+        type="button"
+        class="lightbox-close"
+        aria-label="Close enlarged view">&times;</button
+      >
+      <div class="lightbox-image-wrap">
+        <img id="lightbox-img" src="" alt="Enlarged view" />
+      </div>
+      <div id="lightbox-caption" class="lightbox-caption"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Client-side Lightbox Handler
+  document.addEventListener("DOMContentLoaded", () => {
+    const lightbox = document.getElementById(
+      "inspiration-lightbox",
+    ) as HTMLElement;
+    const lightboxImg = document.getElementById(
+      "lightbox-img",
+    ) as HTMLImageElement;
+    const lightboxCaption = document.getElementById(
+      "lightbox-caption",
+    ) as HTMLElement;
+    const backdrop = lightbox?.querySelector(".lightbox-backdrop");
+    const closeBtn = lightbox?.querySelector(".lightbox-close");
+    const cards = document.querySelectorAll(".inspiration-card");
+
+    if (!lightbox || !lightboxImg || !lightboxCaption) return;
+
+    function openLightbox(src: string, title: string) {
+      lightboxImg.src = src;
+      lightboxImg.alt = title;
+      lightboxCaption.textContent = title;
+      lightbox.classList.add("is-active");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox?.classList.remove("is-active");
+      lightbox?.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      setTimeout(() => {
+        if (!lightbox?.classList.contains("is-active")) {
+          lightboxImg.src = "";
+        }
+      }, 300);
+    }
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const src = card.getAttribute("data-src");
+        const title = card.getAttribute("data-title") || "";
+        if (src) openLightbox(src, title);
+      });
+    });
+
+    closeBtn?.addEventListener("click", closeLightbox);
+    backdrop?.addEventListener("click", closeLightbox);
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && lightbox?.classList.contains("is-active")) {
+        closeLightbox();
+      }
+    });
+  });
+</script>
+
+<style>
+  .inspiration-feed-wrapper {
+    width: 100%;
+  }
+
+  .inspiration-empty {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-md);
+    background: var(--gray-light, #f4f4f4);
+    border-radius: var(--radius-sm, 8px);
+    font-family: var(--font-body, sans-serif);
+    color: var(--gray-dark, #555);
+  }
+
+  /* Pinterest-Style Masonry Columns */
+  .inspiration-masonry-grid {
+    column-count: 4;
+    column-gap: var(--spacing-md, 20px);
+    width: 100%;
+  }
+
+  .inspiration-card {
+    break-inside: avoid;
+    margin-bottom: var(--spacing-md, 20px);
+    display: inline-block;
+    width: 100%;
+    cursor: pointer;
+    border-radius: var(--radius-sm, 8px);
+    overflow: hidden;
+    background-color: var(--gray-light, #f4f4f4);
+    border: var(--border-medium, 2px) solid var(--black, #000);
+    transition:
+      transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+      box-shadow 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .inspiration-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  }
+
+  .inspiration-image-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .inspiration-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+  }
+
+  /* Overlay on hover */
+  .inspiration-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .inspiration-card:hover .inspiration-overlay {
+    opacity: 1;
+  }
+
+  .view-badge {
+    color: #fff;
+    background: rgba(0, 0, 0, 0.75);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-family: var(--font-body, sans-serif);
+    font-size: var(--text-xs, 12px);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Responsive Breakpoints */
+  @media (max-width: 1200px) {
+    .inspiration-masonry-grid {
+      column-count: 3;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .inspiration-masonry-grid {
+      column-count: 2;
+      column-gap: var(--spacing-sm, 12px);
+    }
+    .inspiration-card {
+      margin-bottom: var(--spacing-sm, 12px);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .inspiration-masonry-grid {
+      column-count: 1;
+    }
+  }
+
+  /* Lightbox Modal */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      visibility 0.3s ease,
+      opacity 0.3s ease;
+  }
+
+  .lightbox.is-active {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+  }
+
+  .lightbox-dialog {
+    position: relative;
+    z-index: 10000;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: scale(0.95);
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  .lightbox.is-active .lightbox-dialog {
+    transform: scale(1);
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -45px;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 36px;
+    font-weight: 300;
+    cursor: pointer;
+    line-height: 1;
+    padding: 4px 8px;
+    transition: opacity 0.2s ease;
+  }
+
+  .lightbox-close:hover {
+    opacity: 0.7;
+  }
+
+  .lightbox-image-wrap {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: var(--radius-sm, 8px);
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .lightbox-image-wrap img {
+    max-width: 100%;
+    max-height: 80vh;
+    display: block;
+    object-fit: contain;
+  }
+
+  .lightbox-caption {
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--font-body, sans-serif);
+    font-size: var(--text-sm, 14px);
+    text-transform: capitalize;
+    text-align: center;
+  }
+</style>
