@@ -1,0 +1,527 @@
+---
+// src/components/WorkCanvas.astro
+// Draggable "wall of cards" work section.
+// Pan with mouse-drag, touch-drag, or scroll wheel. Inertia on release,
+// soft bounce-back at edges. No external animation library.
+
+export interface Project {
+  title: string;
+  category: string;
+  tools: string;
+  year: string;
+  image: string;
+  href: string;
+  size?: "sm" | "md" | "lg"; // controls card footprint in the grid
+}
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props as Props;
+---
+
+<section class="work" aria-label="Work">
+  <div class="viewport" id="work-viewport">
+    <div class="track" id="work-track">
+      {
+        projects.map((project, i) => (
+          <a
+            class={`card card--${project.size ?? "md"}`}
+            href={project.href}
+            style={`--jitter: ${((i % 5) - 2) * 0.6}deg`}
+          >
+            <div class="card__image-wrap">
+              <img
+                class="card__image"
+                src={project.image}
+                alt={project.title}
+                loading="lazy"
+                draggable="false"
+              />
+            </div>
+            <div class="card__meta">
+              <span class="card__title">{project.title}</span>
+              <span class="card__sub">{project.category}</span>
+              <span class="card__sub card__sub--faint">
+                {project.tools} — {project.year}
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+
+  <p class="hint" id="work-hint" aria-hidden="true">scroll / drag to move</p>
+</section>
+
+<style>
+  .work {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #141311;
+    overflow: hidden;
+  }
+  .card__image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+  .viewport {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(237, 230, 214, 0.06) 1px,
+      transparent 0
+    );
+    background-size: 28px 28px;
+  }
+
+  .viewport.is-dragging {
+    cursor: grabbing;
+  }
+
+  .track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: grid;
+    width: max-content;
+    min-height: 1080px;
+    grid-template-columns: repeat(6, 320px);
+    grid-auto-rows: 260px;
+    gap: 64px;
+    padding: 140px;
+    will-change: transform;
+  }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    text-decoration: none;
+    color: #ede6d6;
+    transform: rotate(var(--jitter));
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    user-select: none;
+  }
+
+  .card {
+    /* let grid cell size determine footprint; keep block-level sizing */
+    width: 100%;
+  }
+
+  .card--sm {
+    aspect-ratio: 4 / 5;
+  }
+
+  .card--md {
+    aspect-ratio: 3 / 2;
+  }
+
+  .card--lg {
+    aspect-ratio: 5 / 3;
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .card:hover {
+    transform: rotate(0deg) scale(1.045) translateY(-4px);
+    z-index: 2;
+  }
+
+  .card--sm {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .card--md {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+  .card--lg {
+    grid-column: span 1;
+    grid-row: span 2;
+  }
+  .card--lg .card__image-wrap {
+    aspect-ratio: 3 / 4;
+  }
+
+  .card__image-wrap {
+    position: relative;
+    aspect-ratio: auto;
+    overflow: hidden;
+    background: #201e1a;
+    box-shadow: 0 18px 30px -14px rgba(0, 0, 0, 0.7);
+    transition: box-shadow 0.25s ease;
+  }
+
+  .card:hover .card__image-wrap {
+    box-shadow: 0 28px 48px -16px rgba(0, 0, 0, 0.85);
+  }
+
+  .card__title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
+  .card__sub {
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+    text-transform: uppercase; s and everything but nice tabs for it's very different for I think it's going to it's working about two fingers I cannot like go back and you can like change it from here as well I think this is just the tools it's the bous is actually credit bacheling credit go to some yet very good like slowly since so it's like I don't serve students in final project people asking no before twelve asking it article trying to get a juga set mask to use the same chapters don't match khan to have next little sharing the magazine since he like sold stuff I bought it today's nothing experience original bank charge, like pura khim pulling to battle, employs I sit picture basic changing, like it's a new code, she bay, nei, pleasure credit use barty glomgar, hora mistake, testing are testing as timea bulk photon. Most common service prediction micro tears, drison tradition. It happened twice for consecutively you should set them perform a simple set of exam model on a fewplay so just set up like not forward because if you go tosensitive actual education on the transfer because they say to help the last current seats a pick we have afew students and what sapping is I do know if you want to go away it's something never never started a government set traditional holidays to start I have three guys used to overs a what was his name of it and share something but he has gone inside something to the second guy and make the second may call me and a column of this guy you know what's happened and maybe yeah and I have three up in that and talk to you what the fuck was happening like really matchsort of sensitive story cancers which children starts to talk to me and start in jokes and study since close to certainly faster is very excellent. all children of theperson to all existent states. The further transfer is flattered, which makes all children of the element flatten to the same place as apparent, changing it to preserve allows the children to all existing free space. This is after example it's linked that we illustrate in CSS to create tubes much more efficiently tick tech tech physic no pen new badava dwo exphora incoicate tune already use. Are tharmal spick north blue part Print to me psity size me play print walk pulch
+    color: #b8ae98;
+  }
+  .card__title {
+    font-famil training they are paying in sheep is touch search for that math professor is math professory: var(--font-display);
+    font-size:var(--text-lg);
+    letter-spacing: -0.01em;
+  }
+
+  .card__sub {
+    font-family: var(--font-body);
+    font-size:var(--text-sm);
+    letter-spacing: 0.02em; Not the specific tropes of case for example, and I tend to find something smaller in foreign trajectory
+    text-transform: uppercase;
+    color: #b8ae98;
+  }
+
+  .card__sub--faint {
+    color: #7a7264;
+  }
+
+  .hint {
+    position: absolute;
+    left: 50%;
+    bottom: 32px;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 8px 16px;
+    border: 1px solid rgba(237, 230, 214, 0.25);
+    border-radius: 999px;
+    font-family:var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ede6d6;
+    background: rgba(20, 19, 17, 0.6);
+    backdrop-filter: blur(6px);
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 0.6s ease;
+    z-index: 3;
+  }
+
+  .hint.is-hidden {
+    opacity: 0;
+  }
+
+  @media (max-width: 720px) {
+    .track {
+      grid-template-columns: repeat(4, 220px);
+      grid-auto-rows: 190px;
+      gap: 40px;
+      padding: 90px;
+    }
+    .card__title {
+      font-size: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .card__image-wrap,
+    .hint {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Vanilla drag + momentum + edge bounce-back for the work canvas.
+  // Runs once per WorkCanvas instance on the page.
+
+  function initWorkCanvas() {
+    const viewport = document.getElementById("work-viewport") as HTMLElement | null;
+    const track = document.getElementById("work-track") as HTMLElement | null;
+    const hint = document.getElementById("work-hint") as HTMLElement | null;
+    if (!viewport || !track) return;
+    // Narrow to non-null typed aliases so inner functions don't see these as possibly null
+    const V = viewport as HTMLElement;
+    const T = track as HTMLElement;
+    const H = hint as HTMLElement | null;
+
+    let x = 0;
+    let y = 0;
+    // Parallax offsets from mouse movement
+    let parallaxX = 0;
+    let parallaxY = 0;
+    let targetParallaxX = 0;
+    let targetParallaxY = 0;
+    let parallaxFrame: number | null = null;
+    // Edge auto-pan: pointer tracking and auto-pan velocities
+    let pointerX = 0;
+    let pointerY = 0;
+    let autoPanVX = 0;
+    let autoPanVY = 0;
+    let autoPanFrame: number | null = null;
+    let startX = 0;
+    let startY = 0;
+    let originX = 0;
+    let originY = 0;
+    let velocityX = 0;
+    let velocityY = 0;
+    let lastMoveX = 0;
+    let lastMoveY = 0;
+    let lastMoveTime = 0;
+    let isDragging = false;
+    let momentumFrame: number | null = null;
+    let hasInteracted = false;
+
+    const FRICTION = 0.94; // per-frame velocity decay during momentum
+    const BOUNCE_DURATION = 400; // ms, edge snap-back transition
+    const PARALLAX_MAX = 28; // px max offset for parallax
+    const PARALLAX_SMOOTH = 0.14; // lerp factor
+    const EDGE_ZONE = 96; // px from edge to begin auto-pan
+    const EDGE_PAN_MAX = 12; // max px per frame auto-pan speed
+
+    function getBounds() {
+      const trackRect = T.getBoundingClientRect();
+      const viewportRect = V.getBoundingClientRect();
+      // Track is rendered at transform:none scale, so measure natural size.
+      const trackWidth = T.scrollWidth;
+      const trackHeight = T.scrollHeight;
+      const minX = Math.min(0, viewportRect.width - trackWidth);
+      const minY = Math.min(0, viewportRect.height - trackHeight);
+      return { minX, maxX: 0, minY, maxY: 0 };
+    }
+
+    function setTransform(px: number, py: number) {
+      T.style.transform = `translate3d(${px + parallaxX}px, ${py + parallaxY}px, 0)`;
+    }
+
+    function clamp(value: number, min: number, max: number) {
+      return Math.max(min, Math.min(max, value));
+    }
+
+    function dismissHint() {
+      if (hasInteracted || !H) return;
+      hasInteracted = true;
+      H.classList.add("is-hidden");
+    }
+
+    function stopMomentum() {
+      if (momentumFrame !== null) {
+        cancelAnimationFrame(momentumFrame);
+        momentumFrame = null;
+      }
+    }
+
+    function animateParallax() {
+      parallaxX += (targetParallaxX - parallaxX) * PARALLAX_SMOOTH;
+      parallaxY += (targetParallaxY - parallaxY) * PARALLAX_SMOOTH;
+      setTransform(x, y);
+      if (Math.abs(targetParallaxX - parallaxX) > 0.05 || Math.abs(targetParallaxY - parallaxY) > 0.05) {
+        parallaxFrame = requestAnimationFrame(animateParallax);
+      } else {
+        parallaxFrame = null;
+      }
+    }
+
+    function animateAutoPan() {
+      // Apply auto-pan velocity while active
+      x = x + autoPanVX;
+      y = y + autoPanVY;
+      const { minX, maxX, minY, maxY } = getBounds();
+      // Clamp softly to bounds while auto-panning
+      x = clamp(x, minX - 60, maxX + 60);
+      y = clamp(y, minY - 60, maxY + 60);
+      setTransform(x, y);
+      // keep running while velocity present
+      if (Math.abs(autoPanVX) > 0.01 || Math.abs(autoPanVY) > 0.01) {
+        autoPanFrame = requestAnimationFrame(animateAutoPan);
+      } else {
+        autoPanFrame = null;
+      }
+    }
+
+    function settleToBounds() {
+      const { minX, maxX, minY, maxY } = getBounds();
+      const targetX = clamp(x, minX, maxX);
+      const targetY = clamp(y, minY, maxY);
+      if (targetX !== x || targetY !== y) {
+        T.style.transition = `transform ${BOUNCE_DURATION}ms cubic-bezier(0.22, 1, 0.36, 1)`;
+        x = targetX;
+        y = targetY;
+        setTransform(x, y);
+        window.setTimeout(() => {
+          T.style.transition = "none";
+        }, BOUNCE_DURATION);
+      }
+    }
+
+    function runMomentum() {
+      const { minX, maxX, minY, maxY } = getBounds();
+
+      // Extra pull back toward bounds if we're outside them (rubber-band feel).
+      if (x > maxX) velocityX -= (x - maxX) * 0.12;
+      if (x < minX) velocityX -= (x - minX) * 0.12;
+      if (y > maxY) velocityY -= (y - maxY) * 0.12;
+      if (y < minY) velocityY -= (y - minY) * 0.12;
+
+      velocityX *= FRICTION;
+      velocityY *= FRICTION;
+      x += velocityX;
+      y += velocityY;
+      setTransform(x, y);
+
+      if (Math.abs(velocityX) > 0.3 || Math.abs(velocityY) > 0.3) {
+        momentumFrame = requestAnimationFrame(runMomentum);
+      } else {
+        momentumFrame = null;
+        settleToBounds();
+      }
+    }
+
+    function onPointerDown(e: PointerEvent) {
+      dismissHint();
+      stopMomentum();
+      T.style.transition = "none";
+      isDragging = true;
+      V.classList.add("is-dragging");
+      startX = e.clientX;
+      startY = e.clientY;
+      originX = x;
+      originY = y;
+      lastMoveX = e.clientX;
+      lastMoveY = e.clientY;
+      lastMoveTime = performance.now();
+      velocityX = 0;
+      velocityY = 0;
+      V.setPointerCapture(e.pointerId);
+    }
+
+    function onPointerMove(e: PointerEvent) {
+      // If not dragging, use mouse movement to drive parallax (desktop only)
+      if (!isDragging) {
+        if (e.pointerType === "mouse") {
+          const rect = V.getBoundingClientRect();
+          const nx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+          const ny = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+          targetParallaxX = clamp(-nx * PARALLAX_MAX, -PARALLAX_MAX, PARALLAX_MAX);
+          targetParallaxY = clamp(-ny * (PARALLAX_MAX * 0.6), -PARALLAX_MAX, PARALLAX_MAX);
+          // pointer position for auto-pan
+          pointerX = e.clientX - rect.left;
+          pointerY = e.clientY - rect.top;
+          // compute auto-pan velocities based on proximity to edges
+          const zone = EDGE_ZONE;
+          autoPanVX = 0;
+          autoPanVY = 0;
+          if (pointerX < zone) {
+            autoPanVX = ((zone - pointerX) / zone) * EDGE_PAN_MAX;
+          } else if (pointerX > rect.width - zone) {
+            autoPanVX = -((pointerX - (rect.width - zone)) / zone) * EDGE_PAN_MAX;
+          }
+          if (pointerY < zone) {
+            autoPanVY = ((zone - pointerY) / zone) * (EDGE_PAN_MAX * 0.45);
+          } else if (pointerY > rect.height - zone) {
+            autoPanVY = -((pointerY - (rect.height - zone)) / zone) * (EDGE_PAN_MAX * 0.45);
+          }
+          if (parallaxFrame === null) parallaxFrame = requestAnimationFrame(animateParallax);
+          if ((Math.abs(autoPanVX) > 0.01 || Math.abs(autoPanVY) > 0.01) && autoPanFrame === null) {
+            autoPanFrame = requestAnimationFrame(animateAutoPan);
+          }
+        }
+        return;
+      }
+
+      const { minX, maxX, minY, maxY } = getBounds();
+
+      let nextX = originX + (e.clientX - startX);
+      let nextY = originY + (e.clientY - startY);
+
+      // Soft resistance past the edges.
+      if (nextX > maxX) nextX = maxX + (nextX - maxX) * 0.35;
+      if (nextX < minX) nextX = minX + (nextX - minX) * 0.35;
+      if (nextY > maxY) nextY = maxY + (nextY - maxY) * 0.35;
+      if (nextY < minY) nextY = minY + (nextY - minY) * 0.35;
+
+      x = nextX;
+      y = nextY;
+      setTransform(x, y);
+
+      const now = performance.now();
+      const dt = Math.max(now - lastMoveTime, 1);
+      velocityX = ((e.clientX - lastMoveX) / dt) * 16; // scale to ~per-frame px
+      velocityY = ((e.clientY - lastMoveY) / dt) * 16;
+      lastMoveX = e.clientX;
+      lastMoveY = e.clientY;
+      lastMoveTime = now;
+    }
+
+    function onPointerUp(e: PointerEvent) {
+      if (!isDragging) return;
+      isDragging = false;
+      V.classList.remove("is-dragging");
+      V.releasePointerCapture(e.pointerId);
+      momentumFrame = requestAnimationFrame(runMomentum);
+      // Reset parallax gently after drag ends
+      targetParallaxX = 0;
+      targetParallaxY = 0;
+      if (parallaxFrame === null) parallaxFrame = requestAnimationFrame(animateParallax);
+    }
+
+    function onWheel(e: WheelEvent) {
+      e.preventDefault();
+      dismissHint();
+      stopMomentum();
+      T.style.transition = "none";
+
+      const { minX, maxX, minY, maxY } = getBounds();
+      x = clamp(x - e.deltaX, minX - 60, maxX + 60);
+      y = clamp(y - e.deltaY, minY - 60, maxY + 60);
+      setTransform(x, y);
+
+      velocityX = -e.deltaX * 0.5;
+      velocityY = -e.deltaY * 0.5;
+      stopMomentum();
+      momentumFrame = requestAnimationFrame(runMomentum);
+      // small parallax nudge on wheel
+      targetParallaxX = clamp(-e.deltaX * 0.02, -PARALLAX_MAX, PARALLAX_MAX);
+      targetParallaxY = clamp(-e.deltaY * 0.015, -PARALLAX_MAX, PARALLAX_MAX);
+      if (parallaxFrame === null) parallaxFrame = requestAnimationFrame(animateParallax);
+    }
+
+    V.addEventListener("pointerdown", onPointerDown);
+    V.addEventListener("pointermove", onPointerMove);
+    V.addEventListener("pointerup", onPointerUp);
+    V.addEventListener("pointercancel", onPointerUp);
+    V.addEventListener("wheel", onWheel, { passive: false });
+    V.addEventListener("pointerleave", () => {
+      targetParallaxX = 0;
+      targetParallaxY = 0;
+      if (parallaxFrame === null) parallaxFrame = requestAnimationFrame(animateParallax);
+    });
+
+    // Prevent the browser's native drag-image ghost when dragging over <img>/<a>.
+    V.addEventListener("dragstart", (e) => e.preventDefault());
+
+    setTransform(x, y);
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initWorkCanvas);
+  } else {
+    initWorkCanvas();
+  }
+</script>

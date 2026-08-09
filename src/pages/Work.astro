@@ -1,3 +1,105 @@
-<section class="Projects">
-    <img class="">
-</section>
+---
+// src/pages/work.astro
+import WorkCanvas from "../components/work-section/WorkCanvas.astro";
+import type { Project } from "../components/work-section/WorkCanvas.astro";
+
+// Replace with real content later — e.g. pull from a src/content collection.
+const projects: Project[] = [
+  {
+    title: "Alice in Wonderland",
+    category: "Dropcap Design",
+    tools: "Procreate, Illustrator",
+    year: "2025",
+    image: "/images/download (1).jpg",
+    href: "/work/alice",
+    size: "md",
+  },
+  {
+    title: "The Art of Slow Travel",
+    category: "Publication Design",
+    tools: "InDesign",
+    year: "2026",
+    image: "/images/illustration.jpg",
+    href: "/work/slow-travel",
+    size: "lg",
+  },
+  {
+    title: "Savrané",
+    category: "Branding & Packaging",
+    tools: "Illustrator, Photoshop",
+    year: "2025",
+    image: "/images/savrane.jpg",
+    href: "/work/savrane",
+    size: "sm",
+  },
+  {
+    title: "Moving Image",
+    category: "Motion Graphics",
+    tools: "After Effects, Premiere",
+    year: "2025",
+    image: "/images/moving-image.jpg",
+    href: "/work/moving-image",
+    size: "md",
+  },
+  {
+    title: "Dolce",
+    category: "Branding",
+    tools: "Illustrator, Photoshop",
+    year: "2026",
+    image: "/images/dolce.jpg",
+    href: "/work/dolce",
+    size: "lg",
+  },
+  {
+    title: "10Past",
+    category: "Branding",
+    tools: "Illustrator, Photoshop, Procreate",
+    year: "2026",
+    image: "/images/10past.jpg",
+    href: "/work/10past",
+    size: "sm",
+  },
+  {
+    title: "&Again",
+    category: "Branding, Art Direction",
+    tools: "Illustrator, Photoshop, Procreate",
+    year: "2026",
+    image: "/images/again.jpg",
+    href: "/work/again",
+    size: "md",
+  },
+  {
+    title: "Posters",
+    category: "Graphic Design",
+    tools: "Illustrator",
+    year: "2025",
+    image: "/images/posters.jpg",
+    href: "/work/posters",
+    size: "sm",
+  },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Work</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
+  </head>
+  <body>
+    <WorkCanvas projects={projects} />
+  </body>
+</html>
+
+<style is:global>
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    background: #141311;
+  }
+</style>
