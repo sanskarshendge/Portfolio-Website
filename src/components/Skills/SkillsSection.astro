@@ -9,10 +9,10 @@ import skills from '../../data/skills.json';
 
     <div class="skills-grid">
       {skills.map((skill) => (
-        <div class="flip-word">
+        <a href={skill.link} class="flip-word">
           <span class="word">{skill.name}</span>
           <span class="word duplicate">{skill.name}</span>
-        </div>
+        </a>
       ))}
     </div>
 
@@ -85,7 +85,7 @@ import skills from '../../data/skills.json';
   cursor:pointer;
   line-height:1;
   background-color:var(--blue-base);
-  
+  text-decoration: none;
 }
 .word{
   display:flex;

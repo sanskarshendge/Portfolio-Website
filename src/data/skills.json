@@ -1,20 +1,26 @@
 [
   {
-    "name": "Illustration" 
+    "name": "Illustration",
+    "link": "/work"
   },
   {
-    "name": "Branding"
+    "name": "Branding",
+    "link": "/work"
   },
   {
-    "name": "Art Direction"
+    "name": "Art Direction",
+    "link": "/work"
   },
   {
-    "name": "Photography"
+    "name": "Photography",
+    "link": "/work"
   },
   {
-    "name": "UI/UX"
+    "name": "UI/UX",
+    "link": "/work"
   },
   {
-    "name": "Visual Storytelling"
+    "name": "Visual Storytelling",
+    "link": "/work"
   }
 ]
