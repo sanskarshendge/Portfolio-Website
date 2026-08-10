@@ -22,6 +22,35 @@ const { title = "Portfolio" } = Astro.props;
   </head>
   <body>
     <slot />
+    
+    <script>
+      import gsap from "gsap";
+      import ScrollTrigger from "gsap/ScrollTrigger";
+      
+      gsap.registerPlugin(ScrollTrigger);
+
+      // We use Astro's page load event in case View Transitions are added later, 
+      // but DOMContentLoaded works fine for standard Astro.
+      function initParallax() {
+        gsap.utils.toArray("[data-parallax]").forEach((el: any) => {
+          const speed = parseFloat(el.dataset.parallax || "0.1");
+          
+          gsap.to(el, {
+            y: () => -(window.innerHeight * speed),
+            ease: "none",
+            scrollTrigger: {
+              trigger: el,
+              start: "top bottom",
+              end: "bottom top",
+              scrub: true,
+              invalidateOnRefresh: true
+            },
+          });
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", initParallax);
+    </script>
   </body>
 </html>
 
