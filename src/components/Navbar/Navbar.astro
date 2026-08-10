@@ -1,32 +1,45 @@
 ---
 // Navbar.astro
 const navItems = [
-  { label: 'About', href: '#about' },
-  { label: 'Work', href: '/work' },
-  { label: 'Inspiration', href: '#inspiration' },
-  { label: 'Contact', href: '#contact' }
+  { label: "About", href: "#about" },
+  { label: "Work", href: "/work" },
+  { label: "Inspiration", href: "#inspiration" },
+  { label: "Contact", href: "#contact" },
 ];
 ---
 
 <nav class="navbar">
   <div class="navbar-container">
     <div class="navbar-logo">
-      <a href="/">Portfolio</a>
+      <h2>Portfolio</h2>
     </div>
 
-    <input type="checkbox" id="nav-toggle" class="navbar-toggle" aria-hidden="true" />
-    <label for="nav-toggle" class="navbar-burger" aria-label="Toggle navigation">
+    <input
+      type="checkbox"
+      id="nav-toggle"
+      class="navbar-toggle"
+      aria-hidden="true"
+    />
+    <label
+      for="nav-toggle"
+      class="navbar-burger"
+      aria-label="Toggle navigation"
+    >
       <span></span>
       <span></span>
       <span></span>
     </label>
 
     <ul class="navbar-menu">
-      {navItems.map((item) => (
-        <li class="navbar-item">
-          <a href={item.href} class="navbar-link">{item.label}</a>
-        </li>
-      ))}
+      {
+        navItems.map((item) => (
+          <li class="navbar-item">
+            <a href={item.href} class="navbar-link">
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
     </ul>
   </div>
 </nav>
@@ -73,14 +86,15 @@ const navItems = [
     height: 2px;
     margin: 5px 0;
     background-color: var(--black);
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
   }
 
   .navbar-menu {
     display: flex;
     gap: var(--spacing-lg);
     align-items: center;
-    
   }
 
   .navbar-item {
