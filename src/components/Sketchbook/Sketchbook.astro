@@ -76,7 +76,6 @@
 </section>
 
 <style>
-
   * {
     margin: 0;
     padding: 0;
@@ -302,7 +301,11 @@
     position: absolute;
     inset: 0;
 
-    background: linear-gradient(135deg, var(--sketchbook-cover), var(--sketchbook-cover-dark));
+    background: linear-gradient(
+      135deg,
+      var(--sketchbook-cover),
+      var(--sketchbook-cover-dark)
+    );
 
     border-radius: 12px;
 
@@ -521,15 +524,13 @@
     );
 
     let currentPageIndex = initialFlippedPageIndex;
-    const lastPageIndex = pages.length > 0 ? pages.length - 1 : 0;
+    const lastPageIndex =
+      pages.length > 0 ? Number(pages[pages.length - 1].dataset.pageIndex) : 0;
 
     function updateNavigation() {
       if (!navigation) return;
 
-      prevArrow.classList.toggle(
-        "hidden",
-        currentPageIndex <= 0,
-      );
+      prevArrow.classList.toggle("hidden", currentPageIndex <= 0);
       nextArrow.classList.toggle("hidden", currentPageIndex >= lastPageIndex);
     }
 
@@ -581,6 +582,9 @@
         transformOrigin: "left center",
         duration: 0.9,
         ease: "power1.out",
+        onComplete: () => {
+          gsap.set(currentPage, { clearProps: "zIndex" });
+        },
       });
 
       currentPageIndex -= 1;
