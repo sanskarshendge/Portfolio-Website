@@ -2,7 +2,7 @@
 // src/pages/work.astro
 import WorkCanvas from "../components/work-section/WorkCanvas.astro";
 import type { Project } from "../components/work-section/WorkCanvas.astro";
-import "../styles/global.css";
+import '../styles/global.css';
 
 // Replace with real content later — e.g. pull from a src/content collection.
 const projects: Project[] = [
@@ -20,7 +20,7 @@ const projects: Project[] = [
     category: "Publication Design",
     tools: "InDesign",
     year: "2026",
-    image: "/images/Project-4.png",
+    image: "/images/illustration.jpg",
     href: "/work/slow-travel",
     size: "lg",
   },
@@ -93,18 +93,9 @@ const projects: Project[] = [
   </head>
   <body>
     <WorkCanvas projects={projects} />
-
+    
     <a href="/" class="back-button" aria-label="Go back to home">
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <line x1="19" y1="12" x2="5" y2="12"></line>
         <polyline points="12 19 5 12 12 5"></polyline>
       </svg>
@@ -134,7 +125,7 @@ const projects: Project[] = [
     border-radius: 999px;
     color: #ede6d6;
     text-decoration: none;
-    font-family: var(--font-display, "Fraunces", serif);
+    font-family: var(--font-display, 'Fraunces', serif);
     font-size: 0.9rem;
     font-weight: 500;
     z-index: 100;
