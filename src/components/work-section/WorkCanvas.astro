@@ -26,43 +26,38 @@ const { projects } = Astro.props as Props;
 <section class="work" aria-label="Work">
   <div class="viewport" id="work-viewport">
     <div class="track" id="work-track">
-      {
-        Array.from({ length: 3 }).map((_, blockIndex) => (
-          <div class="project-block" data-block={blockIndex}>
-            {projects.map((project, i) => (
-              <a
-                class={`card card--${project.size ?? "md"}`}
-                href={project.href}
-                style={`--jitter: ${((i % 5) - 2) * 0.6}deg`}
-              >
-                <div class="card__image-wrap">
-                  <img
-                    class="card__image"
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    draggable="false"
-                  />
-                </div>
-                <div class="card__meta">
-                  <span class="card__title">{project.title} </span> <br />
-                  <span class="card__sub">
-                    {project.category}
-                    <br />
-                  </span>
-                  <span class="card__sub card__sub--faint">
-                    {project.tools} — {project.year}
-                  </span>
-                </div>
-              </a>
-            ))}
-          </div>
-        ))
-      }
+      <div class="project-block">
+        {projects.map((project, i) => (
+          <a
+            class={`card card--${project.size ?? "md"}`}
+            href={project.href}
+            style={`--jitter: ${((i % 5) - 2) * 0.6}deg`}
+          >
+            <div class="card__image-wrap">
+              <img
+                src={project.image}
+                alt={project.title}
+                class="card__image"
+                loading="lazy"
+              />
+            </div>
+            <div class="card__meta">
+              <span class="card__title">{project.title} </span> <br>
+              <span class="card__sub">
+                {project.category}
+                <br />
+              </span>
+              <span class="card__sub card__sub--faint">
+                {project.tools} — {project.year}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </div>
 
-  <p class="hint" id="work-hint" aria-hidden="true">scroll / drag to move</p>
+
 </section>
 
 <style>
@@ -77,21 +72,15 @@ const { projects } = Astro.props as Props;
   }
 
   .viewport {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-    cursor: grab;
-    touch-action: none;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
     background-image: radial-gradient(
       circle at 1px 1px,
       rgba(255, 255, 255, 0.212) 3px,
       transparent 0
     );
     background-size: 28px 28px;
-  }
-
-  .viewport.is-dragging {
-    cursor: grabbing;
   }
 
   .track {
@@ -209,282 +198,3 @@ const { projects } = Astro.props as Props;
   }
 </style>
 
-<script>
-  // Vanilla drag + momentum + infinite loop for the work canvas.
-  // Runs once per WorkCanvas instance on the page.
-
-  function initWorkCanvas() {
-    const viewport = document.getElementById(
-      "work-viewport",
-    ) as HTMLElement | null;
-    const track = document.getElementById("work-track") as HTMLElement | null;
-    const hint = document.getElementById("work-hint") as HTMLElement | null;
-    if (!viewport || !track) return;
-
-    const V = viewport as HTMLElement;
-    const T = track as HTMLElement;
-    const H = hint as HTMLElement | null;
-
-    let x = 0;
-    let y = 0;
-
-    // Calculate block size based on track size / 3
-    let blockH = 0;
-
-    function measureBlocks() {
-      // The track is a vertical stack of 3 blocks.
-      blockH = T.scrollHeight / 3;
-    }
-
-    // Parallax offsets from mouse movement
-    let parallaxX = 0;
-    let parallaxY = 0;
-    let targetParallaxX = 0;
-    let targetParallaxY = 0;
-    let parallaxFrame: number | null = null;
-
-    // Edge auto-pan
-    let pointerX = 0;
-    let pointerY = 0;
-    let autoPanVX = 0;
-    let autoPanVY = 0;
-    let autoPanFrame: number | null = null;
-
-    let startX = 0;
-    let startY = 0;
-    let originX = 0;
-    let originY = 0;
-    let velocityX = 0;
-    let velocityY = 0;
-    let lastMoveX = 0;
-    let lastMoveY = 0;
-    let lastMoveTime = 0;
-    let isDragging = false;
-    let momentumFrame: number | null = null;
-    let hasInteracted = false;
-
-    const FRICTION = 0.94;
-    const PARALLAX_MAX = 28;
-    const PARALLAX_SMOOTH = 0.14;
-    const EDGE_ZONE = 96;
-    const EDGE_PAN_MAX = 12;
-
-    function wrapCoordinates() {
-      measureBlocks();
-      if (blockH === 0) return;
-
-      // Lock X axis completely
-      x = 0;
-      originX = 0;
-      velocityX = 0;
-
-      if (y > -blockH / 2) {
-        y -= blockH;
-        originY -= blockH;
-      } else if (y < -blockH * 1.5) {
-        y += blockH;
-        originY += blockH;
-      }
-    }
-
-    function setTransform(px: number, py: number) {
-      T.style.transform = `translate3d(${px + parallaxX}px, ${py + parallaxY}px, 0)`;
-    }
-
-    function dismissHint() {
-      if (hasInteracted || !H) return;
-      hasInteracted = true;
-      H.classList.add("is-hidden");
-    }
-
-    function stopMomentum() {
-      if (momentumFrame !== null) {
-        cancelAnimationFrame(momentumFrame);
-        momentumFrame = null;
-      }
-    }
-
-    function animateParallax() {
-      parallaxX += (targetParallaxX - parallaxX) * PARALLAX_SMOOTH;
-      parallaxY += (targetParallaxY - parallaxY) * PARALLAX_SMOOTH;
-      setTransform(x, y);
-      if (
-        Math.abs(targetParallaxX - parallaxX) > 0.05 ||
-        Math.abs(targetParallaxY - parallaxY) > 0.05
-      ) {
-        parallaxFrame = requestAnimationFrame(animateParallax);
-      } else {
-        parallaxFrame = null;
-      }
-    }
-
-    function animateAutoPan() {
-      x = x + autoPanVX;
-      y = y + autoPanVY;
-      wrapCoordinates();
-      setTransform(x, y);
-
-      if (Math.abs(autoPanVX) > 0.01 || Math.abs(autoPanVY) > 0.01) {
-        autoPanFrame = requestAnimationFrame(animateAutoPan);
-      } else {
-        autoPanFrame = null;
-      }
-    }
-
-    function runMomentum() {
-      velocityX *= FRICTION;
-      velocityY *= FRICTION;
-      x += velocityX;
-      y += velocityY;
-
-      wrapCoordinates();
-      setTransform(x, y);
-
-      if (Math.abs(velocityX) > 0.3 || Math.abs(velocityY) > 0.3) {
-        momentumFrame = requestAnimationFrame(runMomentum);
-      } else {
-        momentumFrame = null;
-      }
-    }
-
-    function onPointerDown(e: PointerEvent) {
-      dismissHint();
-      stopMomentum();
-      T.style.transition = "none";
-      isDragging = true;
-      V.classList.add("is-dragging");
-      startX = e.clientX;
-      startY = e.clientY;
-      originX = x;
-      originY = y;
-      lastMoveX = e.clientX;
-      lastMoveY = e.clientY;
-      lastMoveTime = performance.now();
-      velocityX = 0;
-      velocityY = 0;
-      V.setPointerCapture(e.pointerId);
-    }
-
-    function onPointerMove(e: PointerEvent) {
-      if (!isDragging) {
-        if (e.pointerType === "mouse") {
-          const rect = V.getBoundingClientRect();
-          const nx =
-            (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
-          const ny =
-            (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
-          targetParallaxX = -nx * PARALLAX_MAX;
-          targetParallaxY = -ny * (PARALLAX_MAX * 0.6);
-
-          pointerX = e.clientX - rect.left;
-          pointerY = e.clientY - rect.top;
-
-          const zone = EDGE_ZONE;
-          autoPanVX = 0;
-          autoPanVY = 0;
-          if (pointerX < zone) {
-            autoPanVX = ((zone - pointerX) / zone) * EDGE_PAN_MAX;
-          } else if (pointerX > rect.width - zone) {
-            autoPanVX =
-              -((pointerX - (rect.width - zone)) / zone) * EDGE_PAN_MAX;
-          }
-          if (pointerY < zone) {
-            autoPanVY = ((zone - pointerY) / zone) * (EDGE_PAN_MAX * 0.45);
-          } else if (pointerY > rect.height - zone) {
-            autoPanVY =
-              -((pointerY - (rect.height - zone)) / zone) *
-              (EDGE_PAN_MAX * 0.45);
-          }
-
-          if (parallaxFrame === null)
-            parallaxFrame = requestAnimationFrame(animateParallax);
-          if (
-            (Math.abs(autoPanVX) > 0.01 || Math.abs(autoPanVY) > 0.01) &&
-            autoPanFrame === null
-          ) {
-            autoPanFrame = requestAnimationFrame(animateAutoPan);
-          }
-        }
-        return;
-      }
-
-      let nextX = 0;
-      let nextY = originY + (e.clientY - startY);
-
-      x = nextX;
-      y = nextY;
-      wrapCoordinates();
-      setTransform(x, y);
-
-      const now = performance.now();
-      const dt = Math.max(now - lastMoveTime, 1);
-      velocityX = 0;
-      velocityY = ((e.clientY - lastMoveY) / dt) * 16;
-      lastMoveX = e.clientX;
-      lastMoveY = e.clientY;
-      lastMoveTime = now;
-    }
-
-    function onPointerUp(e: PointerEvent) {
-      if (!isDragging) return;
-      isDragging = false;
-      V.classList.remove("is-dragging");
-      V.releasePointerCapture(e.pointerId);
-      momentumFrame = requestAnimationFrame(runMomentum);
-
-      targetParallaxX = 0;
-      targetParallaxY = 0;
-      if (parallaxFrame === null)
-        parallaxFrame = requestAnimationFrame(animateParallax);
-    }
-
-    function onWheel(e: WheelEvent) {
-      e.preventDefault();
-      dismissHint();
-      stopMomentum();
-      T.style.transition = "none";
-
-      x = 0;
-      y -= e.deltaY;
-      wrapCoordinates();
-      setTransform(x, y);
-
-      velocityX = 0;
-      velocityY = -e.deltaY * 0.5;
-      momentumFrame = requestAnimationFrame(runMomentum);
-
-      targetParallaxX = 0;
-      targetParallaxY = -e.deltaY * 0.015;
-      if (parallaxFrame === null)
-        parallaxFrame = requestAnimationFrame(animateParallax);
-    }
-
-    V.addEventListener("pointerdown", onPointerDown);
-    V.addEventListener("pointermove", onPointerMove);
-    V.addEventListener("pointerup", onPointerUp);
-    V.addEventListener("pointercancel", onPointerUp);
-    V.addEventListener("wheel", onWheel, { passive: false });
-    V.addEventListener("pointerleave", () => {
-      targetParallaxX = 0;
-      targetParallaxY = 0;
-      if (parallaxFrame === null)
-        parallaxFrame = requestAnimationFrame(animateParallax);
-    });
-
-    V.addEventListener("dragstart", (e) => e.preventDefault());
-
-    // Initialize to the center block
-    setTimeout(() => {
-      measureBlocks();
-      x = 0;
-      y = -blockH;
-      setTransform(x, y);
-    }, 50);
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initWorkCanvas);
-  } else {
-    initWorkCanvas();
-  }
-</script>
