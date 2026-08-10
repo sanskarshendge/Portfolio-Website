@@ -76,13 +76,6 @@
 </section>
 
 <style>
-  :root {
-    --cover: #c62839;
-    --cover-dark: #9f1d2d;
-    --paper: #f8f3e6;
-    --ink: #1f1f1f;
-    --tape: #e7d4a3;
-  }
 
   * {
     margin: 0;
@@ -123,7 +116,7 @@
 
     transform: translate(20px, 20px);
 
-    background: rgba(0, 0, 0, 0.15);
+    background: var(--sketchbook-shadow-dark);
 
     filter: blur(20px);
 
@@ -157,7 +150,7 @@
     position: absolute;
     inset: 0;
 
-    background: var(--paper);
+    background: var(--sketchbook-paper);
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, 0.08);
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.4);
@@ -182,8 +175,8 @@
     z-index: 1;
     background: linear-gradient(
       180deg,
-      rgba(248, 243, 230, 1),
-      rgba(235, 225, 200, 1)
+      var(--sketchbook-paper),
+      var(--sketchbook-paper-dark)
     );
   }
 
@@ -204,8 +197,8 @@
     height: calc(100% - 24px);
     background: linear-gradient(
       90deg,
-      rgba(255, 255, 255, 0.9),
-      rgba(0, 0, 0, 0.08)
+      var(--sketchbook-shadow-light),
+      var(--sketchbook-shadow-dark)
     );
     border-radius: 0 4px 4px 0;
     pointer-events: none;
@@ -230,12 +223,12 @@
     align-items: center;
     border: none;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.92);
-    color: var(--ink);
+    background: var(--sketchbook-shadow-light);
+    color: var(--sketchbook-ink);
     font-size: 2rem;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 24px var(--sketchbook-shadow-dark);
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
@@ -283,12 +276,12 @@
 
     font-family: "Kalam", cursive;
 
-    color: var(--ink);
+    color: var(--sketchbook-ink);
   }
 
   .page-content h3 {
     margin-bottom: 16px;
-    color: var(--cover);
+    color: var(--sketchbook-cover);
   }
 
   .page-content p {
@@ -300,8 +293,8 @@
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(248, 243, 230, 1) 0%,
-      rgba(246, 239, 219, 1) 100%
+      var(--sketchbook-paper) 0%,
+      var(--sketchbook-paper-dark) 100%
     );
   }
 
@@ -309,11 +302,11 @@
     position: absolute;
     inset: 0;
 
-    background: linear-gradient(135deg, var(--cover), var(--cover-dark));
+    background: linear-gradient(135deg, var(--sketchbook-cover), var(--sketchbook-cover-dark));
 
     border-radius: 12px;
 
-    border: 4px solid #8f1828;
+    border: 4px solid var(--sketchbook-cover-accent);
 
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 
@@ -349,7 +342,7 @@
 
     letter-spacing: 3px;
 
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid var(--sketchbook-shadow-medium);
 
     padding: 8px 14px;
 
@@ -372,7 +365,7 @@
     width: 120px;
     height: 35px;
 
-    background: var(--tape);
+    background: var(--sketchbook-tape);
 
     opacity: 0.8;
 
@@ -390,7 +383,7 @@
 
     margin-top: 30px;
 
-    border: 3px solid rgba(255, 255, 255, 0.5);
+    border: 3px solid var(--sketchbook-shadow-medium);
 
     border-radius: 50%;
 
@@ -405,7 +398,7 @@
     width: 60px;
     height: 60px;
 
-    border: 3px solid rgba(255, 255, 255, 0.5);
+    border: 3px solid var(--sketchbook-shadow-medium);
 
     border-radius: 50%;
 

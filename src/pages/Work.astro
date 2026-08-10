@@ -16,20 +16,20 @@ const projects: Project[] = [
     size: "md",
   },
   {
-    title: "The Art of Slow Travel",
-    category: "Publication Design",
-    tools: "InDesign",
-    year: "2026",
+    title: "Healio",
+    category: "UI/UX",
+    tools: "Figma",
+    year: "2024",
     image: "/images/Project-4.png",
-    href: "/work/slow-travel",
+    href: "/work/healio",
     size: "lg",
   },
   {
-    title: "Savrané",
-    category: "Branding & Packaging",
-    tools: "Illustrator, Photoshop",
+    title: "Short-Story",
+    category: "Visual Storytelling",
+    tools: "Premier-pro",
     year: "2025",
-    image: "/images/project-3.png",
+    image: "/images/Project-5.jpg",
     href: "/work/savrane",
     size: "sm",
   },
@@ -88,7 +88,7 @@ const projects: Project[] = [
     <title>Work</title>
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Londrina+Solid:wght@300;400;900&display=swap"
     />
   </head>
   <body>
@@ -128,11 +128,11 @@ const projects: Project[] = [
     align-items: center;
     gap: 8px;
     padding: 10px 20px;
-    background: rgba(20, 19, 17, 0.6);
+    background: var(--work-overlay);
     backdrop-filter: blur(6px);
-    border: 1px solid rgba(237, 230, 214, 0.25);
+    border: 1px solid var(--work-border);
     border-radius: 999px;
-    color: #ede6d6;
+    color: var(--work-text);
     text-decoration: none;
     font-family: var(--font-display, "Fraunces", serif);
     font-size: 0.9rem;
@@ -143,8 +143,8 @@ const projects: Project[] = [
   }
 
   .back-button:hover {
-    background: rgba(20, 19, 17, 0.85);
+    background: var(--work-overlay-hover);
     transform: scale(1.05);
-    color: #fff;
+    color: var(--white);
   }
 </style>

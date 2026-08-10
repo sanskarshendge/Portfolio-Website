@@ -42,4 +42,25 @@
   --border-thin: 1px;
   --border-medium: 2px;
   --border-thick: 4px;
+  
+  /* Work Section (Dark Theme) */
+  --work-bg: #201e1a;
+  --work-text: #ede6d6;
+  --work-text-muted: #b8ae98;
+  --work-text-faint: #7a7264;
+  --work-overlay: rgba(20, 19, 17, 0.6);
+  --work-overlay-hover: rgba(20, 19, 17, 0.85);
+  --work-border: rgba(237, 230, 214, 0.25);
+  
+  /* Sketchbook Component */
+  --sketchbook-cover: #c62839;
+  --sketchbook-cover-dark: #9f1d2d;
+  --sketchbook-cover-accent: #8f1828;
+  --sketchbook-paper: #f8f3e6;
+  --sketchbook-paper-dark: rgba(235, 225, 200, 1);
+  --sketchbook-ink: #1f1f1f;
+  --sketchbook-tape: #e7d4a3;
+  --sketchbook-shadow-light: rgba(255, 255, 255, 0.9);
+  --sketchbook-shadow-medium: rgba(255, 255, 255, 0.5);
+  --sketchbook-shadow-dark: rgba(0, 0, 0, 0.15);
 }
