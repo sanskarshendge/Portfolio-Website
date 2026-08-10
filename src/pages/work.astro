@@ -1,0 +1,150 @@
+---
+// src/pages/work.astro
+import WorkCanvas from "../components/work-section/WorkCanvas.astro";
+import type { Project } from "../components/work-section/WorkCanvas.astro";
+import "../styles/global.css";
+
+// Replace with real content later — e.g. pull from a src/content collection.
+const projects: Project[] = [
+    {
+        title: "Alice in Wonderland",
+        category: "Dropcap Design",
+        tools: "Procreate, Illustrator",
+        year: "2025",
+        image: "/images/download (1).jpg",
+        href: "/work/alice",
+        size: "md",
+    },
+    {
+        title: "Healio",
+        category: "UI/UX",
+        tools: "Figma",
+        year: "2024",
+        image: "/images/Project-4.png",
+        href: "/work/healio",
+        size: "lg",
+    },
+    {
+        title: "Short-Story",
+        category: "Visual Storytelling",
+        tools: "Premier-pro",
+        year: "2025",
+        image: "/images/Project-5.jpg",
+        href: "/work/savrane",
+        size: "sm",
+    },
+    {
+        title: "Moving Image",
+        category: "Motion Graphics",
+        tools: "After Effects, Premiere",
+        year: "2025",
+        image: "/Goro Fujita.jpg",
+        href: "/work/moving-image",
+        size: "md",
+    },
+    {
+        title: "Dolce",
+        category: "Branding",
+        tools: "Illustrator, Photoshop",
+        year: "2026",
+        image: "/images/illustration.jpg",
+        href: "/work/dolce",
+        size: "lg",
+    },
+    {
+        title: "10Past",
+        category: "Branding",
+        tools: "Illustrator, Photoshop, Procreate",
+        year: "2026",
+        image: "/images/download (1).jpg",
+        href: "/work/10past",
+        size: "sm",
+    },
+    {
+        title: "&Again",
+        category: "Branding, Art Direction",
+        tools: "Illustrator, Photoshop, Procreate",
+        year: "2026",
+        image: "/images/project-3.png",
+        href: "/work/again",
+        size: "md",
+    },
+    {
+        title: "Posters",
+        category: "Graphic Design",
+        tools: "Illustrator",
+        year: "2025",
+        image: "/Goro Fujita.jpg",
+        href: "/work/posters",
+        size: "sm",
+    },
+];
+---
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Work</title>
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Londrina+Solid:wght@300;400;900&display=swap"
+        />
+    </head>
+    <body>
+        <WorkCanvas projects={projects} />
+
+        <a href="/" class="back-button" aria-label="Go back to home">
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            Back
+        </a>
+    </body>
+</html>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background-color: var(--blue-primary);
+    }
+
+    .back-button {
+        position: fixed;
+        top: 32px;
+        left: 32px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: var(--work-overlay);
+        backdrop-filter: blur(6px);
+        border: 1px solid var(--work-border);
+        border-radius: 999px;
+        color: var(--work-text);
+        text-decoration: none;
+        font-family: var(--font-display);
+        font-size: 0.9rem;
+        font-weight: 500;
+        z-index: 100;
+        transition: all 0.2s ease;
+        cursor: pointer;
+    }
+
+    .back-button:hover {
+        background: var(--work-overlay-hover);
+        transform: scale(1.05);
+        color: var(--white);
+    }
+</style>
