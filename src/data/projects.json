@@ -3,7 +3,7 @@
     "id": 1,
     "title": "Identity Design",
     "category": "Branding",
-    "image": "public/images/illustration.jpg",
+    "image": "/images/illustration.jpg",
     "description": "Logo and brand identity system",
     "year": 2024
   },
@@ -11,7 +11,7 @@
     "id": 2,
     "title": "Visual Campaign",
     "category": "Art Direction",
-    "image": "/placeholder-project-2.jpg",
+    "image": "/Goro Fujita.jpg",
     "description": "Campaign design and execution",
     "year": 2024
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "title": "Photography Series",
     "category": "Photography",
-    "image": "/placeholder-project-3.jpg",
+    "image": "/images/project-3.png",
     "description": "Documentary photography collection",
     "year": 2024
   },
@@ -27,7 +27,7 @@
     "id": 4,
     "title": "Illustration Work",
     "category": "Illustration",
-    "image": "/placeholder-project-4.jpg",
+    "image": "/images/download (1).jpg",
     "description": "Character and narrative illustration",
     "year": 2023
   },
@@ -35,7 +35,7 @@
     "id": 5,
     "title": "UI/UX Design",
     "category": "UI/UX",
-    "image": "/placeholder-project-5.jpg",
+    "image": "/images/illustration.jpg",
     "description": "Digital product interface design",
     "year": 2023
   },
@@ -43,7 +43,7 @@
     "id": 6,
     "title": "Print Design",
     "category": "Graphic Design",
-    "image": "/placeholder-project-6.jpg",
+    "image": "/images/project-3.png",
     "description": "Editorial and print collateral",
     "year": 2023
   }

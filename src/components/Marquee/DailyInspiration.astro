@@ -1,63 +1,66 @@
 ---
 // DailyInspiration.astro
-const today= new Date();
+const today = new Date();
 const formattedDate = today.toLocaleDateString("en-GB", {
   day: "2-digit",
   month: "short",
-  year: "numeric"
+  year: "numeric",
 });
 ---
-<section class="Date"> 
+
+<section class="Date">
   <div class="date-stamp">
-  {formattedDate}
-  <p>Today's Inspiration</p>
-</div>
+    {formattedDate}
+    <p>Today's Inspiration</p>
+  </div>
 </section>
 <section class="daily-inspiration">
- 
   <div class="ribbon-track">
     <div class="ribbon-container">
       <div class="ribbon-content">
         <span class="ribbon-text">Today's Inspiration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Collection of my Today's inspuration</span>
+        <span class="ribbon-text">Collection of my Today's inspiration</span>
         <span class="ribbon-separator">•</span>
-        
       </div>
     </div>
     <div class="ribbon-container">
       <div class="ribbon-content">
         <span class="ribbon-text">Today's Inspiration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Collection of my Today's inspuration</span>
+        <span class="ribbon-text">Collection of my Today's inspiration</span>
         <span class="ribbon-separator">•</span>
-        
       </div>
     </div>
     <div class="ribbon-container">
       <div class="ribbon-content">
         <span class="ribbon-text">Today's Inspiration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Collection of my Today's inspuration</span>
+        <span class="ribbon-text">Collection of my Today's inspiration</span>
         <span class="ribbon-separator">•</span>
-        
       </div>
     </div>
     <div class="ribbon-container">
       <div class="ribbon-content">
         <span class="ribbon-text">Today's Inspiration</span>
         <span class="ribbon-separator">•</span>
-        <span class="ribbon-text">Collection of my Today's inspuration</span>
+        <span class="ribbon-text">Collection of my Today's inspiration</span>
         <span class="ribbon-separator">•</span>
-        
       </div>
     </div>
-   
+    <div class="ribbon-container">
+      <div class="ribbon-content">
+        <span class="ribbon-text">Today's Inspiration</span>
+        <span class="ribbon-separator">•</span>
+        <span class="ribbon-text">Collection of my Today's inspiration</span>
+        <span class="ribbon-separator">•</span>
+      </div>
+    </div>
   </div>
 </section>
 
 <style>
-  .date-stamp{
+  . .date-stamp {
     font-family: var(--font-body);
     padding-left: var(--spacing-md);
   }
@@ -70,11 +73,11 @@ const formattedDate = today.toLocaleDateString("en-GB", {
   }
 
   .ribbon-track {
-      display: flex;
-      width: max-content;
-      align-items: center;
-      will-change: transform;
-      animation: marquee-left 18s linear infinite;
+    display: flex;
+    width: max-content;
+    align-items: center;
+    will-change: transform;
+    animation: marquee-left 15s linear infinite;
   }
 
   .ribbon-container {
@@ -110,15 +113,15 @@ const formattedDate = today.toLocaleDateString("en-GB", {
   .daily-inspiration:hover .ribbon-track {
     animation-play-state: paused;
   }
-  .h5{
-    font-family:var(--font-body);
+  .h5 {
+    font-family: var(--font-body);
   }
   @keyframes marquee-left {
     from {
-        transform: translate3d(0%, 0, 0); 
+      transform: translate3d(0%, 0, 0);
     }
     to {
-        transform: translate3d(-50%, 0, 0); 
+      transform: translate3d(-50%, 0, 0);
     }
   }
 
