@@ -1,6 +1,6 @@
 ---
 // AboutSection.astro
-import about from '../../data/about.json';
+import about from "../../data/about.json";
 ---
 
 <section class="about" id="about">
@@ -10,69 +10,75 @@ import about from '../../data/about.json';
       <p class="about-intro">{about.intro}</p>
       <p class="about-bio">{about.bio}</p>
     </div>
-
-    <div class="about-contact" data-parallax="-0.1">
-      <h3>Get in Touch</h3>
-      <p class="contact-email">{about.email}</p>
-      <p class="contact-location">{about.location}</p>
-    </div>
   </div>
+  <img
+    src="/images/illustration.png"
+    alt="Illustration"
+    class="about-illustration"
+    data-parallax="-0.1"
+  />
 </section>
 
 <style>
   .about {
+    position: relative;
     width: 100%;
     background-color: var(--yellow-base);
     padding: var(--spacing-2xl) 0;
+    overflow: hidden;
+  }
+
+  .about-illustration {
+    mix-blend-mode: multiply;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    width: 65%;
+    max-height: 100%;
+    object-fit: contain;
+    object-position: bottom right;
+    z-index: 0;
+    pointer-events: none;
   }
 
   .about-container {
-    max-width: 1000px;
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 var(--spacing-md);
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-2xl);
+    padding: 0 var(--spacing-2xl);
+    display: flex;
+  }
+
+  .about-content {
+    width: 35%;
+    max-width: 450px;
+    padding-top: var(--spacing-xl);
   }
 
   .about-title {
     font-family: var(--font-display);
-    font-size: var(--text-7xl);
-    font-weight: var(--weight-bold);
+    font-size: 4rem;
+    font-weight: 900;
     color: var(--black);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
   }
 
   .about-intro {
     font-family: var(--font-body);
-    font-size: var(--text-lg);
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--black);
-    line-height: var(--leading-relaxed);
-    margin-bottom: var(--spacing-md);
+    line-height: 1.4;
+    margin-bottom: var(--spacing-sm);
   }
 
   .about-bio {
     font-family: var(--font-body);
-    font-size: var(--text-base);
-    color: var(--gray-dark);
-    line-height: var(--leading-relaxed);
-  }
-
-  .about-contact {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-    padding: var(--spacing-lg);
-    background-color: var(--paper);
-    border-radius: var(--radius-lg);
-    border: var(--border-medium) solid var(--black);
-  }
-
-  .about-contact h3 {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--black);
+    line-height: 1.4;
   }
 
   .contact-email,
@@ -91,17 +97,32 @@ import about from '../../data/about.json';
 
   /* Mobile Responsive */
   @media (max-width: 768px) {
+    .about-illustration {
+      position: relative;
+      width: 90%;
+      bottom: auto;
+      right: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
     .about-container {
-      grid-template-columns: 1fr;
-      gap: var(--spacing-lg);
+      padding: 0 var(--spacing-md);
+    }
+
+    .about-content {
+      width: 100%;
+      max-width: none;
+      padding-top: 0;
     }
 
     .about-title {
-      font-size: var(--text-3xl);
+      font-size: 3rem;
     }
 
-    .about-intro {
-      font-size: var(--text-base);
+    .about-intro,
+    .about-bio {
+      font-size: 1rem;
     }
   }
 </style>
