@@ -95,10 +95,16 @@
     padding-bottom: 40px;
 
     background: var(--yellow-base);
+    
+    position: relative;
+    z-index: 5; /* Render above hero video but under clouds */
   }
 
   .sketchbook {
     position: relative;
+    /* Pull the book itself up to overlap the animation */
+    margin-top: -120px;
+    z-index: 5;
 
     width: min(70vw, 550px);
     aspect-ratio: 1/1;
@@ -437,7 +443,8 @@
 
     const header = document.querySelector(".navbar");
     const headerHeight = header?.offsetHeight || 88;
-    const safeOffset = headerHeight + 16;
+    // Add 120px to account for the sketchbook's negative margin pulling it up
+    const safeOffset = headerHeight + 16 + 120;
 
     section.style.setProperty("--sketchbook-offset", `${safeOffset}px`);
 
