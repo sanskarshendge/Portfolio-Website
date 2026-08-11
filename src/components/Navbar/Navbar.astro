@@ -10,10 +10,6 @@ const navItems = [
 
 <nav class="navbar">
   <div class="navbar-container">
-    <div class="navbar-logo">
-      <h2>Portfolio</h2>
-    </div>
-
     <input
       type="checkbox"
       id="nav-toggle"
@@ -47,11 +43,20 @@ const navItems = [
 <style>
   .navbar {
     width: 100%;
-    background-color: var(--yellow-base);
-    border-bottom: var(--border-medium) solid var(--black);
+    /* Translucent black for the dark glass effect */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Frosted glass blur */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     position: sticky;
     top: 0;
     z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .navbar--hidden {
+    transform: translateY(-100%);
   }
 
   .navbar-container {
@@ -60,7 +65,7 @@ const navItems = [
     margin: 0 auto;
     padding: var(--spacing-s) 1rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centered items */
     align-items: center;
     gap: var(--spacing-md);
   }
@@ -104,7 +109,133 @@ const navItems = [
   .navbar-link {
     font-family: var(--font-display);
     font-size: var(--text-xl);
-    color: var(--red-primary);
+    color: var(--white); /* Changed to white as requested */
+    transition: opacity var(--transition-fast);
+  }
+
+  .navbar-link:hover {
+    opacity: 0.6;
+  }
+
+  @media (max-width: 768px) {
+    .navbar-container {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+---
+// Navbar.astro
+const navItems = [
+  { label: "About", href: "#about" },
+  { label: "Work", href: "/work" },
+  { label: "Inspiration", href: "#inspiration" },
+  { label: "Contact", href: "#contact" },
+];
+---
+
+<nav class="navbar">
+  <div class="navbar-container">
+    <input
+      type="checkbox"
+      id="nav-toggle"
+      class="navbar-toggle"
+      aria-hidden="true"
+    />
+    <label
+      for="nav-toggle"
+      class="navbar-burger"
+      aria-label="Toggle navigation"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <ul class="navbar-menu">
+      {
+        navItems.map((item) => (
+          <li class="navbar-item">
+            <a href={item.href} class="navbar-link">
+              {item.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    width: 100%;
+    /* Translucent black for the dark glass effect */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Frosted glass blur */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .navbar--hidden {
+    transform: translateY(-100%);
+  }
+
+  .navbar-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-s) 1rem;
+    display: flex;
+    justify-content: center; /* Centered items */
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+
+  .navbar-logo a {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: var(--weight-bold);
+    color: var(--black);
+  }
+
+  .navbar-toggle {
+    display: none;
+  }
+
+  .navbar-burger {
+    display: none;
+  }
+
+  .navbar-burger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    margin: 5px 0;
+    background-color: var(--black);
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
+  }
+
+  .navbar-menu {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+  }
+
+  .navbar-item {
+    list-style: none;
+  }
+
+  .navbar-link {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    color: var(--white); /* Changed to white as requested */
     transition: opacity var(--transition-fast);
   }
 
@@ -145,3 +276,31 @@ const navItems = [
     }
   }
 </style>
+
+<script>
+  // Hide navbar on scroll down, reveal on scroll up
+  let lastScroll = 0;
+  const navbar = document.querySelector('.navbar');
+
+  if (navbar) {
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      
+      // Always show at the very top
+      if (currentScroll <= 0) {
+        navbar.classList.remove('navbar--hidden');
+        return;
+      }
+      
+      if (currentScroll > lastScroll && !navbar.classList.contains('navbar--hidden')) {
+        // Scrolling down - hide it
+        navbar.classList.add('navbar--hidden');
+      } else if (currentScroll < lastScroll && navbar.classList.contains('navbar--hidden')) {
+        // Scrolling up - show it
+        navbar.classList.remove('navbar--hidden');
+      }
+      
+      lastScroll = currentScroll;
+    });
+  }
+</script>
