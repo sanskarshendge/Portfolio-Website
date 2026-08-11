@@ -14,6 +14,13 @@ import Sketchbook from "../Sketchbook/Sketchbook.astro";
       playsinline></video>
     <h1 class="hero-title" data-parallax="-0.2"></h1>
   </div>
+  <video
+    class="hero-overlay-video"
+    src="/images/IMG_0242.MOV"
+    autoplay
+    loop
+    muted
+    playsinline></video>
 </section>
 
 <style>
@@ -23,18 +30,36 @@ import Sketchbook from "../Sketchbook/Sketchbook.astro";
     width: 100%;
     background-color: var(--yellow-base);
     position: relative;
+    /* Removed z-index to allow mix-blend-mode to blend with sketchbook */
   }
   .hero-video-wrapper {
     width: 100%;
     height: 420px; /* Adjust height if needed */
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Clips the background video's black bars */
   }
   .hero-video {
     width: 100%;
     height: 100%;
     object-fit: cover; /* Ensures video fills the space beautifully */
     display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    transform: scale(1.15); /* Zooms in to hide any baked-in black bars */
+  }
+  .hero-overlay-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 420px; /* Match the wrapper height */
+    z-index: 10; /* Brought on top of everything */
+    mix-blend-mode: screen; /* Removes the black background */
+    transform: scale(1.25) translateY(10%); /* Scaled and shifted further down to overlap sketchbook */
+    object-fit: cover;
+    pointer-events: none; /* Allows interactions with anything underneath */
   }
   .sketchbook {
     padding-top: var(--spacing-md);
