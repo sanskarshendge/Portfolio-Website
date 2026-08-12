@@ -90,6 +90,7 @@
       <div class="book-cover-back"></div>
     </div>
 
+    <!--
     <div class="sketchbook-nav" aria-hidden="true">
       <button
         type="button"
@@ -102,6 +103,7 @@
         aria-label="Next page">›</button
       >
     </div>
+    -->
   </div>
   <img
     src="/images/short-quote.png"
@@ -147,11 +149,11 @@
 
   @media (max-width: 768px) {
     .sketchbook-stage {
-      height: calc(100vh - var(--sketchbook-offset, 80px)); /* Make it full height to center the sketchbook */
-      min-height: 400px;
-      margin-top: -30px; /* Pull it up less on mobile to avoid covering too much animation */
+      height: 450px; /* Shorter height so it doesn't take up the whole screen */
+      min-height: 450px;
+      margin-top: -30px; 
       padding-bottom: 0px;
-      margin-bottom: -20px; /* Pull the next section closer */
+      margin-bottom: -20px; 
     }
 
     .short-quote-img {
@@ -543,9 +545,9 @@
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: () => `top top+=${safeOffset}`,
+        start: () => window.innerWidth < 768 ? "center center" : `top top+=${safeOffset}`,
         // Reserve less scroll space on mobile to prevent excessive empty scrolling
-        end: () => "+=" + (window.innerWidth < 768 ? window.innerHeight * 2.5 : Math.max(window.innerHeight * 4, 2400)),
+        end: () => "+=" + (window.innerWidth < 768 ? 800 : Math.max(window.innerHeight * 4, 2400)),
         pin: true,
         scrub: true,
         anticipatePin: 1,
@@ -613,8 +615,8 @@
     ).sort((a, b) => Number(a.dataset.pageIndex) - Number(b.dataset.pageIndex));
 
     const navigation = section.querySelector(".sketchbook-nav");
-    const prevArrow = navigation.querySelector(".sketchbook-arrow--prev");
-    const nextArrow = navigation.querySelector(".sketchbook-arrow--next");
+    const prevArrow = navigation?.querySelector(".sketchbook-arrow--prev");
+    const nextArrow = navigation?.querySelector(".sketchbook-arrow--next");
 
     const initialFlippedPageIndex = Math.max(
       0,
@@ -691,12 +693,12 @@
       updateNavigation();
     }
 
-    nextArrow.addEventListener("click", (event) => {
+    nextArrow?.addEventListener("click", (event) => {
       event.stopPropagation();
       nextPage();
     });
 
-    prevArrow.addEventListener("click", (event) => {
+    prevArrow?.addEventListener("click", (event) => {
       event.stopPropagation();
       previousPage();
     });
