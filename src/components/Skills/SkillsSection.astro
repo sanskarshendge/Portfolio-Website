@@ -85,9 +85,9 @@ import skills from "../../data/skills.json";
     align-items: center;
     position: relative;
     overflow: hidden;
-    height: 1.1em;
+    height: 1.5em;
     cursor: pointer;
-    line-height: 1;
+    line-height: 1.5;
     background-color: transparent;
     text-decoration: none;
   }
@@ -97,7 +97,7 @@ import skills from "../../data/skills.json";
     align-items: center;
     font-size: var(--text-5xl);
     font-weight: 700;
-    /* transition:transform 0.25s cubic-bezier(.76,0,.24,1);*/
+    height: 100%;
 
     transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1);
     color: var(--black);
@@ -109,6 +109,7 @@ import skills from "../../data/skills.json";
     font-size: var(--text-5xl);
     position: absolute;
     top: 100%;
+    height: 100%;
     color: var(--blue-primary) !important;
   }
   .flip-word:hover .word {

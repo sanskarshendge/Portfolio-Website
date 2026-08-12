@@ -183,9 +183,15 @@ const { projects } = Astro.props as Props;
 
   @media (max-width: 720px) {
     .project-block {
-      column-count: 2;
+      column-count: 1;
       column-gap: 20px;
       padding: 40px 20px;
+    }
+    .card__title {
+      font-size: var(--text-lg);
+    }
+    .card__sub {
+      font-size: var(--text-sm);
     }
   }
 
