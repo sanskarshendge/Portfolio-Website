@@ -554,11 +554,12 @@
       },
     });
 
-    // Move to center (x) and straighten rotation. Only x & rotation
-    // are animated here to satisfy the requirement. Use ease 'none' so the
-    // scrub maps 1:1 with scroll progress.
+    // Move to center (x) and straighten rotation. We also move it down slightly
+    // (y: 40) to counteract the negative margin we applied, ensuring it doesn't
+    // get cropped by the top of the screen/navbar while pinned!
     tl.to(sketchbook, {
       x: getCenterXOffset,
+      y: 40, 
       rotation: 0,
       ease: "none",
       duration: 1,
