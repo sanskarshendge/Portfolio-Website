@@ -9,10 +9,44 @@
 
     <!-- Pages -->
     <div class="book-pages">
-      <div class="page page-3" data-page-index="3">
+      <div class="page page-6" data-page-index="6">
         <div class="page-inner">
           <div class="page-face page-front">
             <div class="page-paper"></div>
+          </div>
+          <div class="page-face page-back"></div>
+        </div>
+        <div class="page-edge"></div>
+      </div>
+
+      <div class="page page-5" data-page-index="5">
+        <div class="page-inner">
+          <div class="page-face page-front">
+            <div class="page-paper"></div>
+          </div>
+          <div class="page-face page-back"></div>
+        </div>
+        <div class="page-edge"></div>
+      </div>
+
+      <div class="page page-4" data-page-index="4">
+        <div class="page-inner">
+          <div class="page-face page-front">
+            <div class="page-paper"></div>
+          </div>
+          <div class="page-face page-back"></div>
+        </div>
+        <div class="page-edge"></div>
+      </div>
+
+      <div class="page page-3" data-page-index="3">
+        <div class="page-inner">
+          <div class="page-face page-front">
+            <img
+              src="/images/sketch1.jpg"
+              alt="Sketch 3"
+              style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 10; transform: translateZ(1px);"
+            />
           </div>
           <div class="page-face page-back"></div>
         </div>
@@ -22,7 +56,11 @@
       <div class="page page-2" data-page-index="2" data-auto-flip="true">
         <div class="page-inner">
           <div class="page-face page-front">
-            <div class="page-paper"></div>
+            <img
+              src="/images/surrfing-in-fire.jpg"
+              alt="Sketch 2"
+              style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 10; transform: translateZ(1px);"
+            />
           </div>
           <div class="page-face page-back"></div>
         </div>
@@ -32,7 +70,11 @@
       <div class="page page-1" data-page-index="1" data-auto-flip="true">
         <div class="page-inner">
           <div class="page-face page-front">
-            <img src="/images/sketch1.jpg" alt="Sketch 1" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 20px; box-sizing: border-box;" />
+            <img
+              src="/images/sketch1.jpg"
+              alt="Sketch 1"
+              style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 10; transform: translateZ(1px);"
+            />
           </div>
           <div class="page-face page-back"></div>
         </div>
@@ -160,6 +202,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
+    cursor: pointer;
   }
 
   .page-front {
@@ -253,19 +296,34 @@
     pointer-events: none;
   }
 
-  .page-3 {
-    transform: translate(3px, 3px);
+  .page-6 {
+    transform: translate(12px, 12px);
     z-index: 20;
   }
 
+  .page-5 {
+    transform: translate(9px, 9px);
+    z-index: 30;
+  }
+
+  .page-4 {
+    transform: translate(6px, 6px);
+    z-index: 40;
+  }
+
+  .page-3 {
+    transform: translate(3px, 3px);
+    z-index: 50;
+  }
+
   .page-2 {
-    transform: translate(0px, 0px);
-    z-index: 80;
+    transform: translate(0px, 1px);
+    z-index: 60;
   }
 
   .page-1 {
     transform: translate(0px, 0px);
-    z-index: 90;
+    z-index: 70;
   }
 
   .page-content {
@@ -311,17 +369,18 @@
   .book-cover-back {
     position: absolute;
     inset: 0;
-    
+
     border-radius: 12px;
     border: 4px solid var(--sketchbook-cover-accent);
-    
+
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
     overflow: hidden;
   }
 
   .book-cover-front {
-    background: url('/images/backup sketchbook cover.jpg') center/cover no-repeat;
+    background: url("/images/backup sketchbook cover.jpg") center/cover
+      no-repeat;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
     transform: rotateY(0deg);
   }
@@ -330,7 +389,7 @@
     background: var(--sketchbook-cover);
     transform: rotateY(180deg);
     /* Inward shadow to give it some depth on the inside */
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
   }
 
   .cover-content {
@@ -607,6 +666,26 @@
     prevArrow.addEventListener("click", (event) => {
       event.stopPropagation();
       previousPage();
+    });
+
+    pages.forEach((page) => {
+      // Don't add manual click listeners to pages controlled by the scroll timeline
+      if (page.dataset.autoFlip === "true") return;
+
+      const front = page.querySelector(".page-front");
+      const back = page.querySelector(".page-back");
+
+      if (front) {
+        front.addEventListener("click", () => {
+          nextPage();
+        });
+      }
+
+      if (back) {
+        back.addEventListener("click", () => {
+          previousPage();
+        });
+      }
     });
 
     tl.eventCallback("onComplete", showNavigation);
