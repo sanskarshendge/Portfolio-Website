@@ -10,6 +10,8 @@ const navItems = [
 
 <nav class="navbar">
   <div class="navbar-container">
+    <div class="navbar-title-mobile">portfolio</div>
+
     <input
       type="checkbox"
       id="nav-toggle"
@@ -68,13 +70,11 @@ const navItems = [
     justify-content: center; /* Centered items */
     align-items: center;
     gap: var(--spacing-md);
+    position: relative; /* For absolute positioning of title */
   }
 
-  .navbar-logo a {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
-    color: var(--black);
+  .navbar-title-mobile {
+    display: none; /* Hidden on desktop */
   }
 
   .navbar-toggle {
@@ -90,7 +90,7 @@ const navItems = [
     width: 24px;
     height: 2px;
     margin: 5px 0;
-    background-color: var(--black);
+    background-color: var(--white); /* Changed to white for dark background */
     transition:
       transform 0.2s ease,
       opacity 0.2s ease;
@@ -109,7 +109,7 @@ const navItems = [
   .navbar-link {
     font-family: var(--font-display);
     font-size: var(--text-xl);
-    color: var(--white); /* Changed to white as requested */
+    color: var(--white);
     transition: opacity var(--transition-fast);
   }
 
@@ -119,141 +119,27 @@ const navItems = [
 
   @media (max-width: 768px) {
     .navbar-container {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
+      justify-content: flex-end; /* Push burger to right */
     }
 
----
-// Navbar.astro
-const navItems = [
-  { label: "About", href: "#about" },
-  { label: "Work", href: "/work" },
-  { label: "Inspiration", href: "#inspiration" },
-  { label: "Contact", href: "#contact" },
-];
----
-
-<nav class="navbar">
-  <div class="navbar-container">
-    <input
-      type="checkbox"
-      id="nav-toggle"
-      class="navbar-toggle"
-      aria-hidden="true"
-    />
-    <label
-      for="nav-toggle"
-      class="navbar-burger"
-      aria-label="Toggle navigation"
-    >
-      <span></span>
-      <span></span>
-      <span></span>
-    </label>
-
-    <ul class="navbar-menu">
-      {
-        navItems.map((item) => (
-          <li class="navbar-item">
-            <a href={item.href} class="navbar-link">
-              {item.label}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-</nav>
-
-<style>
-  .navbar {
-    width: 100%;
-    /* Translucent black for the dark glass effect */
-    background-color: rgba(0, 0, 0, 0.6);
-    /* Frosted glass blur */
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .navbar--hidden {
-    transform: translateY(-100%);
-  }
-
-  .navbar-container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: var(--spacing-s) 1rem;
-    display: flex;
-    justify-content: center; /* Centered items */
-    align-items: center;
-    gap: var(--spacing-md);
-  }
-
-  .navbar-logo a {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: var(--weight-bold);
-    color: var(--black);
-  }
-
-  .navbar-toggle {
-    display: none;
-  }
-
-  .navbar-burger {
-    display: none;
-  }
-
-  .navbar-burger span {
-    display: block;
-    width: 24px;
-    height: 2px;
-    margin: 5px 0;
-    background-color: var(--black);
-    transition:
-      transform 0.2s ease,
-      opacity 0.2s ease;
-  }
-
-  .navbar-menu {
-    display: flex;
-    gap: var(--spacing-lg);
-    align-items: center;
-  }
-
-  .navbar-item {
-    list-style: none;
-  }
-
-  .navbar-link {
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    color: var(--white); /* Changed to white as requested */
-    transition: opacity var(--transition-fast);
-  }
-
-  .navbar-link:hover {
-    opacity: 0.6;
-  }
-
-  @media (max-width: 768px) {
-    .navbar-container {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
+    .navbar-title-mobile {
+      display: block;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-bold);
+      color: var(--white);
+      letter-spacing: 1px;
     }
 
     .navbar-burger {
       display: block;
       cursor: pointer;
       padding: var(--spacing-s);
+      z-index: 1001; /* Keep it above the menu */
     }
 
     .navbar-menu {
@@ -263,16 +149,33 @@ const navItems = [
       overflow: hidden;
       max-height: 0;
       transition: max-height 0.25s ease;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.9); /* Dark background for dropdown */
+      backdrop-filter: blur(15px);
     }
 
     .navbar-toggle:checked + .navbar-burger + .navbar-menu {
       max-height: 500px;
     }
 
+    /* Animate burger to X */
+    .navbar-toggle:checked + .navbar-burger span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .navbar-toggle:checked + .navbar-burger span:nth-child(2) {
+      opacity: 0;
+    }
+    .navbar-toggle:checked + .navbar-burger span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
     .navbar-link {
       width: 100%;
-      padding: 0.75rem 0;
+      padding: 1rem 0;
       text-align: center;
+      display: block;
     }
   }
 </style>
