@@ -12,6 +12,7 @@ html, body {
   min-height: 100vh;
   background-color: var(--yellow-base);
   color: var(--black);
+  overflow-x: hidden;
 }
 
 /* Reset default styles */
