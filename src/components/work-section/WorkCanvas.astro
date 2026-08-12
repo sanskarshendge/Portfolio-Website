@@ -198,3 +198,28 @@ const { projects } = Astro.props as Props;
   }
 </style>
 
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const cards = document.querySelectorAll(".card");
+  
+  cards.forEach((card, i) => {
+    // Create an alternating parallax speed based on the card's index
+    // Even items move up faster, odd items move slightly down relative to scroll
+    const yOffset = i % 2 === 0 ? -60 : 40;
+    
+    gsap.to(card, {
+      y: yOffset,
+      ease: "none",
+      scrollTrigger: {
+        trigger: card,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+      }
+    });
+  });
+</script>
