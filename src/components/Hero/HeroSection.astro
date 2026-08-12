@@ -74,3 +74,10 @@ import Sketchbook from "../Sketchbook/Sketchbook.astro";
     }
   }
 </style>
+
+<script>
+  const videos = document.querySelectorAll<HTMLVideoElement>('.hero-video, .hero-overlay-video');
+  videos.forEach(video => {
+    video.playbackRate = 0.5; // 50% speed
+  });
+</script>
