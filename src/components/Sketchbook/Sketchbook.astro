@@ -88,13 +88,9 @@
         <div class="tape tape-1"></div>
 
         <div class="cover-content">
-          <span class="label">SKETCHBOOK</span>
-
           <h1>Sanskar</h1>
 
           <p>Visual Notes • 2026</p>
-
-          <div class="doodle"></div>
         </div>
       </div>
       <div class="book-cover-back"></div>
@@ -113,6 +109,11 @@
       >
     </div>
   </div>
+  <img
+    src="/images/short-quote.png"
+    class="short-quote-img"
+    alt="Short quote"
+  />
 </section>
 
 <style>
@@ -137,8 +138,39 @@
     background: var(--yellow-base);
   }
 
+  .short-quote-img {
+    position: absolute;
+    right: 5vw;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 45vw;
+    max-width: 800px;
+    height: auto;
+    opacity: 0.8;
+    z-index: 0; /* Placed behind the sketchbook */
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .sketchbook-stage {
+      min-height: 280px;
+      height: auto;
+      margin-top: -60px; /* Pull it up closer to the hero video */
+      padding-bottom: 0px;
+      margin-bottom: -20px; /* Pull the next section closer */
+    }
+
+    .short-quote-img {
+      width: 90vw; /* Even larger on phone */
+      right: 5vw;
+      opacity: 0.3; /* Fade it out more on mobile so it doesn't distract */
+    }
+  }
+
   .sketchbook {
     position: relative;
+    z-index: 20;
+    margin-top: -100px; /* Pull it upward to overlap the animation slightly */
 
     width: min(70vw, 550px);
     aspect-ratio: 1/1;
@@ -522,7 +554,7 @@
       },
     });
 
-    // Phase 1: move to center (x) and straighten rotation. Only x & rotation
+    // Move to center (x) and straighten rotation. Only x & rotation
     // are animated here to satisfy the requirement. Use ease 'none' so the
     // scrub maps 1:1 with scroll progress.
     tl.to(sketchbook, {
