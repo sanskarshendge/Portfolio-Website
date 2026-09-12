@@ -151,9 +151,9 @@
     .sketchbook-stage {
       height: 450px; /* Shorter height so it doesn't take up the whole screen */
       min-height: 450px;
-      margin-top: -30px; 
+      margin-top: -30px;
       padding-bottom: 0px;
-      margin-bottom: -20px; 
+      margin-bottom: -20px;
     }
 
     .short-quote-img {
@@ -545,9 +545,14 @@
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section,
-        start: () => window.innerWidth < 768 ? "center center" : `top top+=${safeOffset}`,
+        start: () =>
+          window.innerWidth < 768 ? "center center" : `top top+=${safeOffset}`,
         // Reserve less scroll space on mobile to prevent excessive empty scrolling
-        end: () => "+=" + (window.innerWidth < 768 ? 800 : Math.max(window.innerHeight * 4, 2400)),
+        end: () =>
+          "+=" +
+          (window.innerWidth < 768
+            ? 800
+            : Math.max(window.innerHeight * 4, 2400)),
         pin: true,
         scrub: true,
         anticipatePin: 1,
