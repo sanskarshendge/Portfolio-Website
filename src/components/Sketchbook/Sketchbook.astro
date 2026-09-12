@@ -2,70 +2,105 @@
 // src/components/Sketchbook/Sketchbook.astro
 
 const pages = [
-  { type: "cover", image: "/images/backup sketchbook cover.jpg", isCover: true },
+  {
+    type: "cover",
+    image: "/images/backup sketchbook cover.jpg",
+    isCover: true,
+  },
   { type: "image", image: "/images/sketch1.jpg" },
   { type: "image", image: "/images/surrfing-in-fire.jpg" },
   { type: "image", image: "/images/yellow.jpg" },
   { type: "paper" },
   { type: "paper" },
-  { type: "cover-back", isCover: true }
+  { type: "cover-back", isCover: true },
 ];
 ---
 
 <section class="sketchbook-section" aria-label="Interactive Sketchbook">
   <div class="sketchbook-container">
     <div class="controls prev-controls">
-       <button type="button" class="nav-btn prev-btn" aria-label="Previous page">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-       </button>
+      <button type="button" class="nav-btn prev-btn" aria-label="Previous page">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg
+        >
+      </button>
     </div>
 
     <div class="book-wrapper">
       <div class="book" id="sketchbook">
         <div class="book-shadow-drop"></div>
         <div class="book-spine"></div>
-        
+
         <!-- Pages -->
-        {pages.map((page, i) => (
-          <div class={`page ${page.isCover ? 'page-cover' : 'page-regular'}`} data-page-index={i}>
-            <div class="page-front">
-               {page.type === "cover" ? (
-                  <div class="cover-design" style={`background-image: url('${page.image}')`}>
-                    <div class="tape tape-1"></div>
+        {
+          pages.map((page, i) => (
+            <div
+              class={`page ${page.isCover ? "page-cover" : "page-regular"}`}
+              data-page-index={i}
+            >
+              <div class="page-front">
+                {page.type === "cover" ? (
+                  <div
+                    class="cover-design"
+                    style={`background-image: url('${page.image}')`}
+                  >
+                    <div class="tape tape-1" />
                   </div>
-               ) : page.type === "cover-back" ? (
-                  <div class="cover-back-design"></div>
-               ) : page.type === "image" ? (
-                  <img src={page.image} alt={`Sketchbook page ${i}`} class="page-image" draggable="false" />
-               ) : (
-                  <div class="paper-texture"></div>
-               )}
-               <div class="spine-crease"></div>
+                ) : page.type === "cover-back" ? (
+                  <div class="cover-back-design" />
+                ) : page.type === "image" ? (
+                  <img
+                    src={page.image}
+                    alt={`Sketchbook page ${i}`}
+                    class="page-image"
+                    draggable="false"
+                  />
+                ) : (
+                  <div class="paper-texture" />
+                )}
+                <div class="spine-crease" />
+              </div>
+
+              <div class="page-back">
+                {page.type === "cover" ? (
+                  <div class="cover-inner-design" />
+                ) : page.type === "cover-back" ? (
+                  <div class="cover-back-exterior" />
+                ) : (
+                  <div class="paper-texture-back" />
+                )}
+                <div class="spine-crease spine-crease-back" />
+              </div>
             </div>
-            
-            <div class="page-back">
-               {page.type === "cover" ? (
-                  <div class="cover-inner-design"></div>
-               ) : page.type === "cover-back" ? (
-                  <div class="cover-back-exterior"></div>
-               ) : (
-                  <div class="paper-texture-back"></div>
-               )}
-               <div class="spine-crease spine-crease-back"></div>
-            </div>
-          </div>
-        ))}
+          ))
+        }
       </div>
     </div>
 
     <div class="controls next-controls">
-       <button type="button" class="nav-btn next-btn" aria-label="Next page">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
-       </button>
+      <button type="button" class="nav-btn next-btn" aria-label="Next page">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg
+        >
+      </button>
     </div>
   </div>
 
-  <img src="/images/short-quote.png" class="short-quote-img" alt="Short quote" />
+  <img
+    src="/images/short-quote.png"
+    class="short-quote-img"
+    alt="Short quote"
+  />
 </section>
 
 <style>
@@ -79,10 +114,13 @@ const pages = [
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: var(--yellow-base);
-    overflow: hidden;
+    justify-content: flex-start; /* Align left */
+    background: transparent; /* Changed to allow hero section to show behind if overlapping */
+    margin-top: -10vh; /* Reduced overlap so just the corner touches */
+    overflow: visible;
+    z-index: 20; /* Ensure it renders above the hero section */
     padding: 20px;
+    padding-left: 2vw; /* Adjust left spacing */
   }
 
   .short-quote-img {
@@ -103,7 +141,7 @@ const pages = [
     z-index: 10;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start; /* Align book controls to left */
     gap: 40px;
     width: 100%;
     max-width: 1200px;
@@ -116,7 +154,7 @@ const pages = [
 
   .nav-btn {
     background: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0,0,0,0.1);
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 50%;
     width: 56px;
     height: 56px;
@@ -125,14 +163,14 @@ const pages = [
     justify-content: center;
     cursor: pointer;
     color: var(--sketchbook-ink, #333);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: all 0.2s ease;
   }
 
   .nav-btn:hover {
     background: #fff;
     transform: scale(1.05);
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
   }
 
   .nav-btn:active {
@@ -148,18 +186,19 @@ const pages = [
     position: relative;
     perspective: 2500px; /* Strong perspective for 3D depth */
     transform-style: preserve-3d;
+    width: calc(
+      min(45vw, 600px) * 2
+    ); /* Full width of the open two-page spread */
+    display: flex;
+    justify-content: flex-start; /* Align the open spread to the left */
   }
 
   .book {
     position: relative;
-    width: min(45vw, 450px);
+    width: min(45vw, 600px);
     aspect-ratio: 3 / 4;
     transform-style: preserve-3d;
-    /* On desktop, the pages are anchored to the left (spine).
-       This means the book occupies the space to the RIGHT of its origin.
-       To center the open spread, we pull the book left by its own width. */
-    margin-left: -min(45vw, 450px);
-    transform: translateX(50%) rotateX(5deg); 
+    transform: rotateX(5deg);
     /* Gentle tilt for better 3D visibility */
     touch-action: pan-y; /* Allow vertical scroll, block horizontal swipe */
   }
@@ -200,10 +239,11 @@ const pages = [
     cursor: grabbing;
   }
 
-  .page-front, .page-back {
+  .page-front,
+  .page-back {
     position: absolute;
     inset: 0;
-    border-radius: 2px 10px 10px 2px;
+    border-radius: 10px;
     backface-visibility: hidden;
     overflow: hidden;
     background: var(--sketchbook-paper, #fdfbf7);
@@ -212,19 +252,23 @@ const pages = [
 
   .page-cover .page-front,
   .page-cover .page-back {
-    border-radius: 3px 12px 12px 3px;
+    border-radius: 12px;
     background: var(--sketchbook-cover, #4a4a4a);
   }
 
   .page-front {
     transform: rotateY(0deg);
-    box-shadow: inset 2px 0 5px rgba(0,0,0,0.05);
+    box-shadow: inset 2px 0 5px rgba(0, 0, 0, 0.05);
   }
 
   .page-back {
     transform: rotateY(180deg);
-    box-shadow: inset -2px 0 5px rgba(0,0,0,0.05);
-    background: linear-gradient(180deg, var(--sketchbook-paper, #fdfbf7), #f0eee9);
+    box-shadow: inset -2px 0 5px rgba(0, 0, 0, 0.05);
+    background: linear-gradient(
+      180deg,
+      var(--sketchbook-paper, #fdfbf7),
+      #f0eee9
+    );
   }
 
   /* Spine Creases for realistic shading */
@@ -234,7 +278,11 @@ const pages = [
     bottom: 0;
     left: 0;
     width: 40px;
-    background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
     pointer-events: none;
     z-index: 50;
   }
@@ -242,7 +290,11 @@ const pages = [
   .spine-crease-back {
     left: auto;
     right: 0;
-    background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%);
+    background: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.15) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 
   /* Specific Content Styling */
@@ -253,12 +305,10 @@ const pages = [
     pointer-events: none; /* Prevent drag breaking swipe */
   }
 
-  .paper-texture, .paper-texture-back {
+  .paper-texture,
+  .paper-texture-back {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-    background-size: 100% 28px;
-    background-position: 0 20px;
   }
 
   .cover-design {
@@ -284,7 +334,7 @@ const pages = [
     transform: rotate(-12deg);
     top: 20px;
     left: 20px;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
   }
 
   /* Mobile Styles */
@@ -298,11 +348,15 @@ const pages = [
       display: none; /* Hide buttons on mobile, rely on swipe */
     }
 
+    .book-wrapper {
+      width: 90vw;
+      justify-content: flex-start;
+    }
+
     .book {
       width: 90vw;
       max-width: none;
-      margin-left: 0;
-      transform: translateX(0) rotateX(0deg); 
+      transform: rotateX(0deg);
       /* Spine is at the left edge of the screen */
     }
   }
@@ -310,6 +364,10 @@ const pages = [
 
 <script>
   import gsap from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  import { Observer } from "gsap/Observer";
+
+  gsap.registerPlugin(ScrollTrigger, Observer);
 
   function initSketchbook() {
     const book = document.getElementById("sketchbook");
@@ -318,23 +376,155 @@ const pages = [
     const pages = Array.from(book.querySelectorAll(".page"));
     const prevBtn = document.querySelector(".prev-btn") as HTMLButtonElement;
     const nextBtn = document.querySelector(".next-btn") as HTMLButtonElement;
-    
+
     let currentPage = 0;
     const maxPages = pages.length;
     let isAnimating = false;
-    
+
+    // Hide buttons initially on desktop
+    if (window.innerWidth > 768) {
+      gsap.set(".controls", { opacity: 0, pointerEvents: "none" });
+    }
+
+    const bookWrapper = document.querySelector(".book-wrapper");
+    let introComplete = false;
+    let isEntranceLocked = false;
+
+    // Temporary Scroll Lock System
+    function preventScroll(e: Event) {
+      e.preventDefault();
+    }
+
+    function preventKeyScroll(e: KeyboardEvent) {
+      const keys = [
+        "ArrowUp",
+        "ArrowDown",
+        "Space",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+      ];
+      if (keys.includes(e.code)) {
+        e.preventDefault();
+      }
+    }
+
+    function lockScroll() {
+      if (isEntranceLocked) return;
+      isEntranceLocked = true;
+      window.addEventListener("wheel", preventScroll, { passive: false });
+      window.addEventListener("touchmove", preventScroll, { passive: false });
+      window.addEventListener("keydown", preventKeyScroll, { passive: false });
+    }
+
+    function unlockScroll() {
+      if (!isEntranceLocked) return;
+      isEntranceLocked = false;
+      window.removeEventListener("wheel", preventScroll);
+      window.removeEventListener("touchmove", preventScroll);
+      window.removeEventListener("keydown", preventKeyScroll);
+    }
+
+    // Single unified entrance sequence
+    if (bookWrapper) {
+      // Set initial teased state
+      gsap.set(".controls", {
+        opacity: 0,
+        pointerEvents: "none",
+        scale: 0.85,
+      });
+
+      // Initial state for the book: tilted so top-right corner overlaps hero
+      gsap.set(bookWrapper, {
+        rotationZ: 8,
+        scale: 0.95,
+        transformOrigin: "center center",
+      });
+
+      ScrollTrigger.create({
+        trigger: ".sketchbook-section",
+        start: "center center",
+        once: true,
+        onEnter: () => {
+          if (introComplete) return;
+
+          // STATE: SCROLL_LOCKED
+          lockScroll();
+
+          // STATE: SKETCHBOOK_CENTERING
+          // Calculate exact distance to center the full open book
+          const rect = bookWrapper.getBoundingClientRect();
+          const viewportCenterX = window.innerWidth / 2;
+          const wrapperCenterX = rect.left + rect.width / 2;
+          const distanceX = viewportCenterX - wrapperCenterX;
+
+          const tl = gsap.timeline({
+            onComplete: () => {
+              // STATE: INTRO_COMPLETE -> NORMAL_WEBSITE_SCROLL
+              introComplete = true;
+              unlockScroll();
+            },
+          });
+
+          // 1. Smoothly move to center and straighten
+          tl.to(bookWrapper, {
+            x: distanceX,
+            rotationZ: 0,
+            scale: 1,
+            duration: 1.2,
+            ease: "power2.inOut",
+          });
+
+          // 2. Small natural delay
+          tl.to({}, { duration: 0.2 });
+
+          // 3. STATE: FIRST_PAGE_FLIPPING
+          tl.add(() => {
+            turnNext(); // Call existing page flip mechanism exactly once
+          });
+
+          // 4. Wait for flip to complete (Increased buffer to ensure the interaction feels completely finished)
+          tl.to({}, { duration: 1.2 });
+
+          // 5. STATE: ARROWS_REVEALED
+          tl.to(".controls", {
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            pointerEvents: "auto",
+            ease: "power1.out",
+          });
+
+          // 6. Hold the lock just a bit longer after arrows appear so the user doesn't accidentally scroll away instantly
+          tl.to({}, { duration: 0.5 });
+        },
+      });
+
+      // Handle resize to keep it centered after intro
+      window.addEventListener("resize", () => {
+        if (introComplete) {
+          // Reset x transform and use CSS flex to center it robustly
+          gsap.set(bookWrapper, { x: 0, clearProps: "x" });
+          const container = document.querySelector(".sketchbook-container");
+          if (container)
+            (container as HTMLElement).style.justifyContent = "center";
+        }
+      });
+    }
+
     // Thickness parameters
     const Z_THICKNESS = 1.5; // pixels per page
 
     // Initialize Pages
-    function updatePages(duration = 0.8, ease = "power2.inOut") {
+    function updatePages(duration = 0.5, ease = "power2.inOut") {
       pages.forEach((page, i) => {
         const isFlipped = i < currentPage;
         const pageEl = page as HTMLElement;
-        
+
         let rotY = isFlipped ? -180 : 0;
-        let z = isFlipped ? (i * Z_THICKNESS) : ((maxPages - i) * Z_THICKNESS);
-        let zIdx = isFlipped ? i : (maxPages - i);
+        let z = isFlipped ? i * Z_THICKNESS : (maxPages - i) * Z_THICKNESS;
+        let zIdx = isFlipped ? i : maxPages - i;
 
         gsap.to(pageEl, {
           rotateY: rotY,
@@ -342,15 +532,15 @@ const pages = [
           duration: duration,
           ease: ease,
           onStart: () => {
-             // Bring turning page to front immediately so it doesn't clip through others
-             if (i === currentPage - 1 && isFlipped) pageEl.style.zIndex = "100";
-             if (i === currentPage && !isFlipped) pageEl.style.zIndex = "100";
+            // Bring turning page to front immediately so it doesn't clip through others
+            if (i === currentPage - 1 && isFlipped) pageEl.style.zIndex = "100";
+            if (i === currentPage && !isFlipped) pageEl.style.zIndex = "100";
           },
           onComplete: () => {
-             pageEl.style.zIndex = zIdx.toString();
-             isAnimating = false;
-             updateButtons();
-          }
+            pageEl.style.zIndex = zIdx.toString();
+            isAnimating = false;
+            updateButtons();
+          },
         });
       });
     }
@@ -382,86 +572,108 @@ const pages = [
     document.addEventListener("keydown", (e) => {
       // Only flip if book is in viewport (simplified check)
       const rect = book.getBoundingClientRect();
-      if (rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
-         if (e.key === "ArrowRight") turnNext();
-         if (e.key === "ArrowLeft") turnPrev();
+      if (
+        rect.top >= 0 &&
+        rect.bottom <=
+          (window.innerHeight || document.documentElement.clientHeight)
+      ) {
+        if (e.key === "ArrowRight") turnNext();
+        if (e.key === "ArrowLeft") turnPrev();
       }
     });
 
     // --- Mobile Swipe Logic ---
     let startX = 0;
+    let startY = 0;
     let currentX = 0;
+    let currentY = 0;
     let isDragging = false;
     let dragPage: HTMLElement | null = null;
     let dragDirection = 0; // 1 for next, -1 for prev
 
-    book.addEventListener("touchstart", (e) => {
-      if (isAnimating) return;
-      startX = e.touches[0].clientX;
-      isDragging = true;
-      dragPage = null;
-      dragDirection = 0;
-    }, { passive: true });
+    book.addEventListener(
+      "touchstart",
+      (e) => {
+        if (isAnimating) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        isDragging = true;
+        dragPage = null;
+        dragDirection = 0;
+      },
+      { passive: true },
+    );
 
-    book.addEventListener("touchmove", (e) => {
-      if (!isDragging || isAnimating) return;
-      currentX = e.touches[0].clientX;
-      const diffX = currentX - startX;
-      
-      // Determine swipe direction and active page on first significant move
-      if (!dragPage && Math.abs(diffX) > 10) {
-        if (diffX < 0 && currentPage < maxPages) {
-          dragDirection = 1;
-          dragPage = pages[currentPage] as HTMLElement;
-          dragPage.style.zIndex = "100";
-        } else if (diffX > 0 && currentPage > 0) {
-          dragDirection = -1;
-          dragPage = pages[currentPage - 1] as HTMLElement;
-          dragPage.style.zIndex = "100";
-        } else {
-          // Swipe not valid (at bounds)
-          isDragging = false; 
-        }
-      }
+    book.addEventListener(
+      "touchmove",
+      (e) => {
+        if (!isDragging || isAnimating) return;
+        currentX = e.touches[0].clientX;
+        currentY = e.touches[0].clientY;
+        const diffX = currentX - startX;
+        const diffY = currentY - startY;
 
-      if (dragPage) {
-        let progress = Math.abs(diffX) / window.innerWidth;
-        progress = Math.min(Math.max(progress, 0), 1);
-        
-        let rot = 0;
-        if (dragDirection === 1) { 
-          rot = -180 * progress;
-        } else { 
-          rot = -180 + (180 * progress);
+        // Determine swipe direction and active page on first significant move
+        if (!dragPage && (Math.abs(diffX) > 10 || Math.abs(diffY) > 10)) {
+          // Strict directional angle check: horizontal must dominate vertical
+          if (Math.abs(diffX) > Math.abs(diffY) * 1.5) {
+            if (diffX < 0 && currentPage < maxPages) {
+              dragDirection = 1;
+              dragPage = pages[currentPage] as HTMLElement;
+              dragPage.style.zIndex = "100";
+            } else if (diffX > 0 && currentPage > 0) {
+              dragDirection = -1;
+              dragPage = pages[currentPage - 1] as HTMLElement;
+              dragPage.style.zIndex = "100";
+            } else {
+              isDragging = false; // Bounds reached
+            }
+          } else {
+            // Primarily vertical scroll; ignore it so default page scrolling works
+            isDragging = false;
+          }
         }
-        
-        // Use quick GSAP set for touch scrub
-        gsap.set(dragPage, { rotateY: rot });
-      }
-    }, { passive: true });
+
+        if (dragPage) {
+          let progress = Math.abs(diffX) / window.innerWidth;
+          progress = Math.min(Math.max(progress, 0), 1);
+
+          let rot = 0;
+          if (dragDirection === 1) {
+            rot = -180 * progress;
+          } else {
+            rot = -180 + 180 * progress;
+          }
+
+          // Use quick GSAP set for touch scrub
+          gsap.set(dragPage, { rotateY: rot });
+        }
+      },
+      { passive: true },
+    );
 
     book.addEventListener("touchend", () => {
       if (!isDragging) return;
       isDragging = false;
-      
+
       if (dragPage) {
         const diffX = currentX - startX;
         const threshold = window.innerWidth * 0.15; // 15% of screen width to commit
-        
+
         if (dragDirection === 1 && diffX < -threshold) {
-           turnNext();
+          turnNext();
         } else if (dragDirection === -1 && diffX > threshold) {
-           turnPrev();
+          turnPrev();
         } else {
-           // Revert aborted swipe
-           isAnimating = true;
-           updatePages(0.4, "power1.out");
+          // Revert aborted swipe
+          isAnimating = true;
+          updatePages(0.4, "power1.out");
         }
       }
     });
 
     // Initial Setup
-    updatePages(0); 
+    updatePages(0);
   }
 
   // Support Astro view transitions / SPA loads
