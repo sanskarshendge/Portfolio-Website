@@ -1,137 +1,88 @@
 ---
-// Sketchbook.astro
+// src/components/Sketchbook/Sketchbook.astro
+
+const pages = [
+  { type: "cover", image: "/images/backup sketchbook cover.jpg", isCover: true },
+  { type: "image", image: "/images/sketch1.jpg" },
+  { type: "image", image: "/images/surrfing-in-fire.jpg" },
+  { type: "image", image: "/images/yellow.jpg" },
+  { type: "paper" },
+  { type: "paper" },
+  { type: "cover-back", isCover: true }
+];
 ---
 
-<section class="sketchbook-stage">
-  <div class="sketchbook" data-parallax="0.05">
-    <!-- Shadow -->
-    <div class="book-shadow"></div>
+<section class="sketchbook-section" aria-label="Interactive Sketchbook">
+  <div class="sketchbook-container">
+    <div class="controls prev-controls">
+       <button type="button" class="nav-btn prev-btn" aria-label="Previous page">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+       </button>
+    </div>
 
-    <!-- Pages -->
-    <div class="book-pages">
-      <div class="page page-6" data-page-index="6">
-        <div class="page-inner">
-          <div class="page-face page-front">
-            <div class="page-paper"></div>
+    <div class="book-wrapper">
+      <div class="book" id="sketchbook">
+        <div class="book-shadow-drop"></div>
+        <div class="book-spine"></div>
+        
+        <!-- Pages -->
+        {pages.map((page, i) => (
+          <div class={`page ${page.isCover ? 'page-cover' : 'page-regular'}`} data-page-index={i}>
+            <div class="page-front">
+               {page.type === "cover" ? (
+                  <div class="cover-design" style={`background-image: url('${page.image}')`}>
+                    <div class="tape tape-1"></div>
+                  </div>
+               ) : page.type === "cover-back" ? (
+                  <div class="cover-back-design"></div>
+               ) : page.type === "image" ? (
+                  <img src={page.image} alt={`Sketchbook page ${i}`} class="page-image" draggable="false" />
+               ) : (
+                  <div class="paper-texture"></div>
+               )}
+               <div class="spine-crease"></div>
+            </div>
+            
+            <div class="page-back">
+               {page.type === "cover" ? (
+                  <div class="cover-inner-design"></div>
+               ) : page.type === "cover-back" ? (
+                  <div class="cover-back-exterior"></div>
+               ) : (
+                  <div class="paper-texture-back"></div>
+               )}
+               <div class="spine-crease spine-crease-back"></div>
+            </div>
           </div>
-          <div class="page-face page-back"></div>
-        </div>
-        <div class="page-edge"></div>
-      </div>
-
-      <div class="page page-5" data-page-index="5">
-        <div class="page-inner">
-          <div class="page-face page-front">
-            <div class="page-paper"></div>
-          </div>
-          <div class="page-face page-back"></div>
-        </div>
-        <div class="page-edge"></div>
-      </div>
-
-      <div class="page page-4" data-page-index="4">
-        <div class="page-inner">
-          <div class="page-face page-front">
-            <div class="page-paper"></div>
-          </div>
-          <div class="page-face page-back"></div>
-        </div>
-        <div class="page-edge"></div>
-      </div>
-
-      <div class="page page-3" data-page-index="3">
-        <div class="page-inner">
-          <div class="page-face page-front">
-            <img
-              src="/images/yellow.jpg"
-              alt="Sketch 3"
-              style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 10; transform: translateZ(1px);"
-            />
-          </div>
-          <div class="page-face page-back"></div>
-        </div>
-        <div class="page-edge"></div>
-      </div>
-
-      <div class="page page-2" data-page-index="2" data-auto-flip="true">
-        <div class="page-inner">
-          <div class="page-face page-front">
-            <img
-              src="/images/surrfing-in-fire.jpg"
-              alt="Sketch 2"
-              style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 10; transform: translateZ(1px);"
-            />
-          </div>
-          <div class="page-face page-back"></div>
-        </div>
-        <div class="page-edge"></div>
-      </div>
-
-      <div class="page page-1" data-page-index="1" data-auto-flip="true">
-        <div class="page-inner">
-          <div class="page-face page-front">
-            <img
-              src="/images/sketch1.jpg"
-              alt="Sketch 1"
-              style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 10px; z-index: 10; transform: translateZ(1px);"
-            />
-          </div>
-          <div class="page-face page-back"></div>
-        </div>
-        <div class="page-edge"></div>
+        ))}
       </div>
     </div>
 
-    <!-- Cover -->
-    <div class="book-cover">
-      <div class="book-cover-front">
-        <div class="tape tape-1"></div>
-      </div>
-      <div class="book-cover-back"></div>
+    <div class="controls next-controls">
+       <button type="button" class="nav-btn next-btn" aria-label="Next page">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+       </button>
     </div>
-
-    <!--
-    <div class="sketchbook-nav" aria-hidden="true">
-      <button
-        type="button"
-        class="sketchbook-arrow sketchbook-arrow--prev"
-        aria-label="Previous page">‹</button
-      >
-      <button
-        type="button"
-        class="sketchbook-arrow sketchbook-arrow--next"
-        aria-label="Next page">›</button
-      >
-    </div>
-    -->
   </div>
-  <img
-    src="/images/short-quote.png"
-    class="short-quote-img"
-    alt="Short quote"
-  />
+
+  <img src="/images/short-quote.png" class="short-quote-img" alt="Short quote" />
 </section>
 
 <style>
   * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
   }
 
-  .sketchbook-stage {
-    min-height: 600px;
-    height: calc(100vh - var(--sketchbook-offset, 120px));
+  .sketchbook-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
-
-    padding-top: 10px;
-    padding-left: 5vw;
-    padding-right: 5vw;
-    padding-bottom: 40px;
-
+    justify-content: center;
     background: var(--yellow-base);
+    overflow: hidden;
+    padding: 20px;
   }
 
   .short-quote-img {
@@ -142,629 +93,377 @@
     width: 45vw;
     max-width: 800px;
     height: auto;
-    opacity: 0.8;
-    z-index: 0; /* Placed behind the sketchbook */
+    opacity: 0.2;
+    z-index: 0;
     pointer-events: none;
   }
 
-  @media (max-width: 768px) {
-    .sketchbook-stage {
-      height: 450px; /* Shorter height so it doesn't take up the whole screen */
-      min-height: 450px;
-      margin-top: -30px;
-      padding-bottom: 0px;
-      margin-bottom: -20px;
-    }
-
-    .short-quote-img {
-      width: 90vw; /* Even larger on phone */
-      right: 5vw;
-      opacity: 0.3; /* Fade it out more on mobile so it doesn't distract */
-    }
-
-    .sketchbook {
-      margin-top: -40px; /* Reduce the huge overlap on small screens */
-    }
-  }
-
-  .sketchbook {
+  .sketchbook-container {
     position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 1200px;
+  }
+
+  .controls {
+    display: flex;
     z-index: 20;
-    margin-top: -100px; /* Pull it upward to overlap the animation slightly */
-
-    width: min(70vw, 550px);
-    aspect-ratio: 1/1;
-
-    transform: rotate(-8deg);
-    /* enable 3D children and give a perspective for realistic rotateY */
-    transform-style: preserve-3d;
-    perspective: 1200px;
   }
 
-  .book-shadow {
+  .nav-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--sketchbook-ink, #333);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+  }
+
+  .nav-btn:hover {
+    background: #fff;
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  }
+
+  .nav-btn:active {
+    transform: scale(0.95);
+  }
+
+  .nav-btn:disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .book-wrapper {
+    position: relative;
+    perspective: 2500px; /* Strong perspective for 3D depth */
+    transform-style: preserve-3d;
+  }
+
+  .book {
+    position: relative;
+    width: min(45vw, 450px);
+    aspect-ratio: 3 / 4;
+    transform-style: preserve-3d;
+    /* On desktop, the pages are anchored to the left (spine).
+       This means the book occupies the space to the RIGHT of its origin.
+       To center the open spread, we pull the book left by its own width. */
+    margin-left: -min(45vw, 450px);
+    transform: translateX(50%) rotateX(5deg); 
+    /* Gentle tilt for better 3D visibility */
+    touch-action: pan-y; /* Allow vertical scroll, block horizontal swipe */
+  }
+
+  .book-spine {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -10px;
+    width: 20px;
+    background: var(--sketchbook-cover-accent, #333);
+    transform: translateZ(-5px) rotateY(-90deg);
+    transform-origin: center;
+    border-radius: 2px;
+  }
+
+  .book-shadow-drop {
     position: absolute;
     inset: 0;
-
-    transform: translate(20px, 20px);
-
-    background: var(--sketchbook-shadow-dark);
-
+    background: rgba(0, 0, 0, 0.4);
     filter: blur(20px);
-
+    transform: translateZ(-20px) translate(10px, 10px);
     border-radius: 12px;
-  }
-
-  .book-pages {
-    position: absolute;
-    inset: 0;
-    transform-style: preserve-3d;
+    pointer-events: none;
   }
 
   .page {
     position: absolute;
     inset: 0;
-
+    transform-origin: left center;
     transform-style: preserve-3d;
     backface-visibility: visible;
-    -webkit-backface-visibility: visible;
-    transform-origin: left center;
     will-change: transform;
+    cursor: grab;
   }
 
-  .page-inner {
-    position: absolute;
-    inset: 0;
-    transform-style: preserve-3d;
+  .page:active {
+    cursor: grabbing;
   }
 
-  .page-face {
+  .page-front, .page-back {
     position: absolute;
     inset: 0;
-
-    background: var(--sketchbook-paper);
-    border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.4),
-      2px 2px 6px rgba(0, 0, 0, 0.15);
-
-    transform-style: preserve-3d;
+    border-radius: 2px 10px 10px 2px;
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-
     overflow: hidden;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    cursor: pointer;
+    background: var(--sketchbook-paper, #fdfbf7);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .page-cover .page-front,
+  .page-cover .page-back {
+    border-radius: 3px 12px 12px 3px;
+    background: var(--sketchbook-cover, #4a4a4a);
   }
 
   .page-front {
     transform: rotateY(0deg);
-    z-index: 2;
+    box-shadow: inset 2px 0 5px rgba(0,0,0,0.05);
   }
 
   .page-back {
     transform: rotateY(180deg);
-    z-index: 1;
-    background: linear-gradient(
-      180deg,
-      var(--sketchbook-paper),
-      var(--sketchbook-paper-dark)
-    );
+    box-shadow: inset -2px 0 5px rgba(0,0,0,0.05);
+    background: linear-gradient(180deg, var(--sketchbook-paper, #fdfbf7), #f0eee9);
   }
 
-  .page-back::before {
-    content: "";
+  /* Spine Creases for realistic shading */
+  .spine-crease {
     position: absolute;
-    inset: 24px 20px 24px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px);
-    background-size: 100% 28px;
-    opacity: 0.25;
-  }
-
-  .page-edge {
-    position: absolute;
-    top: 12px;
-    right: -8px;
-    width: 8px;
-    height: calc(100% - 24px);
-    background: linear-gradient(
-      90deg,
-      var(--sketchbook-shadow-light),
-      var(--sketchbook-shadow-dark)
-    );
-    border-radius: 0 4px 4px 0;
-    pointer-events: none;
-  }
-
-  .sketchbook-nav {
-    position: absolute;
-    bottom: -80px;
+    top: 0;
+    bottom: 0;
     left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 32px;
+    width: 40px;
+    background: linear-gradient(to right, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%);
     pointer-events: none;
-  }
-
-  .sketchbook-arrow {
-    width: 56px;
-    height: 56px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 50%;
-    background: var(--sketchbook-shadow-light);
-    color: var(--sketchbook-ink);
-    font-size: 2rem;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 12px 24px var(--sketchbook-shadow-dark);
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition:
-      opacity 0.35s ease,
-      visibility 0.35s ease,
-      transform 0.2s ease,
-      background-color 0.2s ease;
-  }
-
-  .sketchbook-arrow:hover {
-    background: #ffffff;
-    transform: scale(1.08);
-  }
-
-  .sketchbook-nav.visible .sketchbook-arrow {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-  }
-
-  .sketchbook-arrow.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .page-6 {
-    transform: translate(12px, 12px);
-    z-index: 20;
-  }
-
-  .page-5 {
-    transform: translate(9px, 9px);
-    z-index: 30;
-  }
-
-  .page-4 {
-    transform: translate(6px, 6px);
-    z-index: 40;
-  }
-
-  .page-3 {
-    transform: translate(3px, 3px);
     z-index: 50;
   }
 
-  .page-2 {
-    transform: translate(0px, 1px);
-    z-index: 60;
+  .spine-crease-back {
+    left: auto;
+    right: 0;
+    background: linear-gradient(to left, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 100%);
   }
 
-  .page-1 {
-    transform: translate(0px, 0px);
-    z-index: 70;
-  }
-
-  .page-content {
-    padding: 40px;
-
-    font-family: "Kalam", cursive;
-
-    color: var(--sketchbook-ink);
-  }
-
-  .page-content h3 {
-    margin-bottom: 16px;
-    color: var(--sketchbook-cover);
-  }
-
-  .page-content p {
-    margin-bottom: 10px;
-  }
-
-  .page-paper {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      180deg,
-      var(--sketchbook-paper) 0%,
-      var(--sketchbook-paper-dark) 100%
-    );
-  }
-
-  .book-cover {
-    position: absolute;
-    inset: 0;
-
-    z-index: 100;
-
-    /* cover opens around the left spine */
-    transform-origin: left center;
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-
-  .book-cover-front,
-  .book-cover-back {
-    position: absolute;
-    inset: 0;
-
-    border-radius: 12px;
-    border: 4px solid var(--sketchbook-cover-accent);
-
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    overflow: hidden;
-  }
-
-  .book-cover-front {
-    background: url("/images/backup sketchbook cover.jpg") center/cover
-      no-repeat;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-    transform: rotateY(0deg);
-  }
-
-  .book-cover-back {
-    background: var(--sketchbook-cover);
-    transform: rotateY(180deg);
-    /* Inward shadow to give it some depth on the inside */
-    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
-  }
-
-  .cover-content {
+  /* Specific Content Styling */
+  .page-image {
+    width: 100%;
     height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    text-align: center;
-
-    color: white;
-
-    padding: 30px;
+    object-fit: cover;
+    pointer-events: none; /* Prevent drag breaking swipe */
   }
 
-  .label {
-    font-size: 0.8rem;
-
-    letter-spacing: 3px;
-
-    border: 2px solid var(--sketchbook-shadow-medium);
-
-    padding: 8px 14px;
-
-    margin-bottom: 20px;
+  .paper-texture, .paper-texture-back {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 100% 28px;
+    background-position: 0 20px;
   }
 
-  .cover-content h1 {
-    font-size: 3rem;
-
-    margin-bottom: 10px;
+  .cover-design {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
   }
 
-  .cover-content p {
-    opacity: 0.8;
+  .cover-back-exterior {
+    width: 100%;
+    height: 100%;
+    background: var(--sketchbook-cover, #4a4a4a);
+    box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
   }
 
   .tape {
     position: absolute;
-
     width: 120px;
     height: 35px;
-
-    background: var(--sketchbook-tape);
-
+    background: var(--sketchbook-tape, #eee);
     opacity: 0.8;
-
     transform: rotate(-12deg);
-  }
-
-  .tape-1 {
     top: 20px;
     left: 20px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.2);
   }
 
-  .doodle {
-    width: 100px;
-    height: 100px;
+  /* Mobile Styles */
+  @media (max-width: 768px) {
+    .sketchbook-container {
+      gap: 0;
+      justify-content: flex-start; /* Anchor book to left */
+    }
 
-    margin-top: 30px;
+    .controls {
+      display: none; /* Hide buttons on mobile, rely on swipe */
+    }
 
-    border: 3px solid var(--sketchbook-shadow-medium);
-
-    border-radius: 50%;
-
-    position: relative;
-  }
-
-  .doodle::before {
-    content: "";
-
-    position: absolute;
-
-    width: 60px;
-    height: 60px;
-
-    border: 3px solid var(--sketchbook-shadow-medium);
-
-    border-radius: 50%;
-
-    top: 15px;
-    left: 15px;
+    .book {
+      width: 90vw;
+      max-width: none;
+      margin-left: 0;
+      transform: translateX(0) rotateX(0deg); 
+      /* Spine is at the left edge of the screen */
+    }
   }
 </style>
 
-<script type="module">
-  // GSAP ScrollTrigger — Phase 1 only
-  // - Pins the `.sketchbook-stage` section when reached
-  // - Scrubs a timeline that moves the sketchbook to the viewport center
-  //   and straightens its rotation to 0deg
-  // - Structure includes clear placeholder comments for future phases
+<script>
   import gsap from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-  gsap.registerPlugin(ScrollTrigger);
+  function initSketchbook() {
+    const book = document.getElementById("sketchbook");
+    if (!book) return;
 
-  function setupSketchbookPhase1() {
-    const section = document.querySelector(".sketchbook-stage");
-    const sketchbook = section?.querySelector(".sketchbook");
-    if (!section || !sketchbook) return;
+    const pages = Array.from(book.querySelectorAll(".page"));
+    const prevBtn = document.querySelector(".prev-btn") as HTMLButtonElement;
+    const nextBtn = document.querySelector(".next-btn") as HTMLButtonElement;
+    
+    let currentPage = 0;
+    const maxPages = pages.length;
+    let isAnimating = false;
+    
+    // Thickness parameters
+    const Z_THICKNESS = 1.5; // pixels per page
 
-    // Compute the X translation required to center the sketchbook in viewport.
-    // Returning a function lets GSAP re-evaluate on refresh for responsive layouts.
-    const getCenterXOffset = () => {
-      const rect = sketchbook.getBoundingClientRect();
-      const currentCenter = rect.left + rect.width / 2;
-      const viewportCenter = window.innerWidth / 2;
-      return viewportCenter - currentCenter;
-    };
+    // Initialize Pages
+    function updatePages(duration = 0.8, ease = "power2.inOut") {
+      pages.forEach((page, i) => {
+        const isFlipped = i < currentPage;
+        const pageEl = page as HTMLElement;
+        
+        let rotY = isFlipped ? -180 : 0;
+        let z = isFlipped ? (i * Z_THICKNESS) : ((maxPages - i) * Z_THICKNESS);
+        let zIdx = isFlipped ? i : (maxPages - i);
 
-    const header = document.querySelector(".navbar");
-    const headerHeight = header?.offsetHeight || 88;
-    const safeOffset = headerHeight + 16;
-
-    section.style.setProperty("--sketchbook-offset", `${safeOffset}px`);
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: () =>
-          window.innerWidth < 768 ? "center center" : `top top+=${safeOffset}`,
-        // Reserve less scroll space on mobile to prevent excessive empty scrolling
-        end: () =>
-          "+=" +
-          (window.innerWidth < 768
-            ? 800
-            : Math.max(window.innerHeight * 4, 2400)),
-        pin: true,
-        scrub: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-        // markers: true, // uncomment for debugging phase boundaries
-      },
-    });
-
-    // Move to center (x) and straighten rotation. We also move it down slightly
-    // (y: 40) to counteract the negative margin we applied, ensuring it doesn't
-    // get cropped by the top of the screen/navbar while pinned!
-    tl.to(sketchbook, {
-      x: getCenterXOffset,
-      y: 40,
-      rotation: 0,
-      ease: "none",
-      duration: 1,
-    });
-
-    // --- Phase 2: Open cover (rotateY around left spine) ------------------
-    const cover = section.querySelector(".book-cover");
-    if (cover) {
-      // ensure starting state
-      gsap.set(cover, { rotationY: 0 });
-      // bring cover above pages while it opens
-      tl.set(cover, { zIndex: 100 });
-      tl.to(cover, {
-        rotationY: -180,
-        transformOrigin: "left center",
-        ease: "none",
-        duration: 1,
-      });
-    }
-
-    // --- Phase 3: Flip first page (rotateY around left spine) -------------
-    const page1 = section.querySelector(".page-1");
-    if (page1) {
-      gsap.set(page1, { rotationY: 0 });
-      tl.set(page1, { zIndex: 101 });
-      tl.to(page1, {
-        rotationY: -165,
-        transformOrigin: "left center",
-        x: 0,
-        duration: 1,
-        ease: "none",
-      });
-    }
-
-    // --- Phase 4: Flip second page --------------------------------------
-    const page2 = section.querySelector(".page-2");
-    if (page2) {
-      gsap.set(page2, { rotationY: 0 });
-      tl.set(page2, { zIndex: 102 });
-      tl.to(page2, {
-        rotationY: -170,
-        transformOrigin: "left center",
-        x: 1,
-        duration: 1,
-        ease: "none",
-      });
-    }
-
-    const pages = Array.from(
-      section.querySelectorAll(".page[data-page-index]"),
-    ).sort((a, b) => Number(a.dataset.pageIndex) - Number(b.dataset.pageIndex));
-
-    const navigation = section.querySelector(".sketchbook-nav");
-    const prevArrow = navigation?.querySelector(".sketchbook-arrow--prev");
-    const nextArrow = navigation?.querySelector(".sketchbook-arrow--next");
-
-    const initialFlippedPageIndex = Math.max(
-      0,
-      ...pages
-        .filter((page) => page.dataset.autoFlip === "true")
-        .map((page) => Number(page.dataset.pageIndex)),
-    );
-
-    let currentPageIndex = initialFlippedPageIndex;
-    const lastPageIndex =
-      pages.length > 0 ? Number(pages[pages.length - 1].dataset.pageIndex) : 0;
-
-    function updateNavigation() {
-      if (!navigation) return;
-
-      prevArrow.classList.toggle("hidden", currentPageIndex <= 0);
-      nextArrow.classList.toggle("hidden", currentPageIndex >= lastPageIndex);
-    }
-
-    function showNavigation() {
-      if (!navigation) return;
-      // Allow showing navigation even if lastPageIndex <= initialFlippedPageIndex
-      navigation.classList.add("visible");
-      navigation.setAttribute("aria-hidden", "false");
-      updateNavigation();
-    }
-
-    function hideNavigation() {
-      if (!navigation) return;
-      navigation.classList.remove("visible");
-      navigation.setAttribute("aria-hidden", "true");
-    }
-
-    function nextPage() {
-      if (currentPageIndex >= lastPageIndex) return;
-      const nextPageIndex = currentPageIndex + 1;
-      const nextPage = pages.find(
-        (page) => Number(page.dataset.pageIndex) === nextPageIndex,
-      );
-      if (!nextPage) return;
-
-      gsap.set(nextPage, { zIndex: 100 + nextPageIndex });
-      gsap.to(nextPage, {
-        rotationY: -180,
-        x: -18 - (nextPageIndex - initialFlippedPageIndex - 1) * 6,
-        transformOrigin: "left center",
-        duration: 0.9,
-        ease: "power1.out",
-      });
-
-      currentPageIndex = nextPageIndex;
-      updateNavigation();
-    }
-
-    function previousPage() {
-      if (currentPageIndex <= 0) return;
-      const currentPage = pages.find(
-        (page) => Number(page.dataset.pageIndex) === currentPageIndex,
-      );
-      if (!currentPage) return;
-
-      gsap.to(currentPage, {
-        rotationY: 0,
-        x: 0,
-        transformOrigin: "left center",
-        duration: 0.9,
-        ease: "power1.out",
-        onComplete: () => {
-          gsap.set(currentPage, { clearProps: "zIndex" });
-        },
-      });
-
-      currentPageIndex -= 1;
-      updateNavigation();
-    }
-
-    nextArrow?.addEventListener("click", (event) => {
-      event.stopPropagation();
-      nextPage();
-    });
-
-    prevArrow?.addEventListener("click", (event) => {
-      event.stopPropagation();
-      previousPage();
-    });
-
-    pages.forEach((page) => {
-      // Don't add manual click listeners to pages controlled by the scroll timeline
-      if (page.dataset.autoFlip === "true") return;
-
-      const front = page.querySelector(".page-front");
-      const back = page.querySelector(".page-back");
-
-      if (front) {
-        front.addEventListener("click", () => {
-          nextPage();
+        gsap.to(pageEl, {
+          rotateY: rotY,
+          z: z,
+          duration: duration,
+          ease: ease,
+          onStart: () => {
+             // Bring turning page to front immediately so it doesn't clip through others
+             if (i === currentPage - 1 && isFlipped) pageEl.style.zIndex = "100";
+             if (i === currentPage && !isFlipped) pageEl.style.zIndex = "100";
+          },
+          onComplete: () => {
+             pageEl.style.zIndex = zIdx.toString();
+             isAnimating = false;
+             updateButtons();
+          }
         });
-      }
+      });
+    }
 
-      if (back) {
-        back.addEventListener("click", () => {
-          previousPage();
-        });
+    function updateButtons() {
+      if (prevBtn) prevBtn.disabled = currentPage === 0;
+      if (nextBtn) nextBtn.disabled = currentPage === maxPages;
+    }
+
+    function turnNext() {
+      if (currentPage >= maxPages || isAnimating) return;
+      isAnimating = true;
+      currentPage++;
+      updatePages();
+    }
+
+    function turnPrev() {
+      if (currentPage <= 0 || isAnimating) return;
+      isAnimating = true;
+      currentPage--;
+      updatePages();
+    }
+
+    // Button Listeners
+    if (nextBtn) nextBtn.addEventListener("click", turnNext);
+    if (prevBtn) prevBtn.addEventListener("click", turnPrev);
+
+    // Keyboard Listeners
+    document.addEventListener("keydown", (e) => {
+      // Only flip if book is in viewport (simplified check)
+      const rect = book.getBoundingClientRect();
+      if (rect.top >= 0 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) {
+         if (e.key === "ArrowRight") turnNext();
+         if (e.key === "ArrowLeft") turnPrev();
       }
     });
 
-    tl.eventCallback("onComplete", showNavigation);
-    tl.eventCallback("onReverseComplete", hideNavigation);
+    // --- Mobile Swipe Logic ---
+    let startX = 0;
+    let currentX = 0;
+    let isDragging = false;
+    let dragPage: HTMLElement | null = null;
+    let dragDirection = 0; // 1 for next, -1 for prev
 
-    // When the timeline completes (scroll reaches `end`) the pin will be
-    // released automatically and normal scrolling resumes.
+    book.addEventListener("touchstart", (e) => {
+      if (isAnimating) return;
+      startX = e.touches[0].clientX;
+      isDragging = true;
+      dragPage = null;
+      dragDirection = 0;
+    }, { passive: true });
 
-    // Responsive refresh handler
-    const onResize = () => ScrollTrigger.refresh();
-    window.addEventListener("resize", onResize);
+    book.addEventListener("touchmove", (e) => {
+      if (!isDragging || isAnimating) return;
+      currentX = e.touches[0].clientX;
+      const diffX = currentX - startX;
+      
+      // Determine swipe direction and active page on first significant move
+      if (!dragPage && Math.abs(diffX) > 10) {
+        if (diffX < 0 && currentPage < maxPages) {
+          dragDirection = 1;
+          dragPage = pages[currentPage] as HTMLElement;
+          dragPage.style.zIndex = "100";
+        } else if (diffX > 0 && currentPage > 0) {
+          dragDirection = -1;
+          dragPage = pages[currentPage - 1] as HTMLElement;
+          dragPage.style.zIndex = "100";
+        } else {
+          // Swipe not valid (at bounds)
+          isDragging = false; 
+        }
+      }
 
-    // Cleanup for SPA/HMR/unload
-    function cleanup() {
-      try {
-        tl.kill();
-        ScrollTrigger.getAll().forEach((st) => st.kill());
-      } catch (e) {}
-      window.removeEventListener("resize", onResize);
-    }
+      if (dragPage) {
+        let progress = Math.abs(diffX) / window.innerWidth;
+        progress = Math.min(Math.max(progress, 0), 1);
+        
+        let rot = 0;
+        if (dragDirection === 1) { 
+          rot = -180 * progress;
+        } else { 
+          rot = -180 + (180 * progress);
+        }
+        
+        // Use quick GSAP set for touch scrub
+        gsap.set(dragPage, { rotateY: rot });
+      }
+    }, { passive: true });
 
-    // Expose cleanup if needed externally
-    section._sketchbookPhase1Cleanup = cleanup;
-  }
-
-  if (typeof window !== "undefined") {
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", setupSketchbookPhase1, {
-        once: true,
-      });
-    } else {
-      setupSketchbookPhase1();
-    }
-
-    // Ensure cleanup on unload
-    window.addEventListener("beforeunload", () => {
-      const section = document.querySelector(".sketchbook-stage");
-      if (section && section._sketchbookPhase1Cleanup)
-        section._sketchbookPhase1Cleanup();
+    book.addEventListener("touchend", () => {
+      if (!isDragging) return;
+      isDragging = false;
+      
+      if (dragPage) {
+        const diffX = currentX - startX;
+        const threshold = window.innerWidth * 0.15; // 15% of screen width to commit
+        
+        if (dragDirection === 1 && diffX < -threshold) {
+           turnNext();
+        } else if (dragDirection === -1 && diffX > threshold) {
+           turnPrev();
+        } else {
+           // Revert aborted swipe
+           isAnimating = true;
+           updatePages(0.4, "power1.out");
+        }
+      }
     });
+
+    // Initial Setup
+    updatePages(0); 
   }
+
+  // Support Astro view transitions / SPA loads
+  document.addEventListener("DOMContentLoaded", initSketchbook);
 </script>

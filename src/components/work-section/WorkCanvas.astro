@@ -107,20 +107,16 @@ const { projects } = Astro.props as Props;
     gap: 14px;
     color: var(--work-text);
     transform: rotate(var(--jitter));
-    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1),
-      box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Transition removed to let GSAP handle transforms smoothly without fighting CSS */
     user-select: none;
     width: 100%;
     break-inside: avoid;
     margin-bottom: 60px;
+    transform-style: preserve-3d;
   }
 
   /* No longer need grid-column spanning for lg/md/sm since columns wrap content naturally */
 
-  .card:hover {
-    transform: rotate(0deg) scale(1.045) translateY(-4px);
-    z-index: 2;
-  }
   .card--lg .card__image-wrap {
   }
 
@@ -213,19 +209,65 @@ const { projects } = Astro.props as Props;
   const cards = document.querySelectorAll(".card");
   
   cards.forEach((card, i) => {
+    const cardEl = card as HTMLElement;
+    
     // Create an alternating parallax speed based on the card's index
     // Even items move up faster, odd items move slightly down relative to scroll
     const yOffset = i % 2 === 0 ? -60 : 40;
     
-    gsap.to(card, {
+    // Add scroll parallax using a wrapper or applying directly
+    gsap.to(cardEl, {
       y: yOffset,
       ease: "none",
       scrollTrigger: {
-        trigger: card,
+        trigger: cardEl,
         start: "top bottom",
         end: "bottom top",
         scrub: true,
       }
+    });
+
+    // 3D Parallax Tilt Effect on Mouse Move
+    cardEl.addEventListener("mousemove", (e) => {
+      const rect = cardEl.getBoundingClientRect();
+      const x = e.clientX - rect.left; // x position within the element
+      const y = e.clientY - rect.top; // y position within the element
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * -8; // max 8 deg tilt
+      const rotateY = ((x - centerX) / centerX) * 8;
+      
+      // We apply rotation over the existing jitter, and add a scale and elevate effect on hover
+      gsap.to(cardEl, {
+        rotateX: rotateX,
+        rotateY: rotateY,
+        rotationZ: 0, // straighten out the jitter on hover
+        scale: 1.045,
+        z: 30, // push out in 3D
+        transformPerspective: 1000,
+        ease: "power2.out",
+        duration: 0.4,
+        overwrite: "auto"
+      });
+      cardEl.style.zIndex = "2";
+    });
+
+    cardEl.addEventListener("mouseleave", () => {
+      // Revert back to original state
+      const jitter = ((i % 5) - 2) * 0.6; // recalculate original jitter
+      gsap.to(cardEl, {
+        rotateX: 0,
+        rotateY: 0,
+        rotationZ: jitter,
+        scale: 1,
+        z: 0,
+        ease: "power3.out",
+        duration: 0.6,
+        overwrite: "auto"
+      });
+      cardEl.style.zIndex = "1";
     });
   });
 </script>
